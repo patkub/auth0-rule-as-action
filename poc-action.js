@@ -16,7 +16,7 @@ let configuration;
  * The Rule
  */
 function accessOnWeekdaysOnly(user, context, callback) {
-  if (context.clientName === 'Default App') {
+  if (context.clientName === 'All Applications') {
     const date = new Date();
     const d = date.getDay();
 
