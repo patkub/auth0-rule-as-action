@@ -1,33 +1,26 @@
 /**
- * Define errors used in rules
+ * RuleToAction
  */
-class UnauthorizedError extends Error {
-    constructor(message) {
-      super(message)
-    }
-}
+const RuleToAction = {}
 
 /**
- * Handle secrets
+ * Initialize globals
  */
-let configuration;
-
-/**
- * The Rule
- */
-function accessOnWeekdaysOnly(user, context, callback) {
-  if (context.clientName === 'All Applications') {
-    const date = new Date();
-    const d = date.getDay();
-
-    if (d === 0 || d === 6) {
-      return callback(
-        new UnauthorizedError('This app is available during the week')
-      );
+RuleToAction.init = () => {
+    /**
+     * Define errors used in rules
+     */
+    class UnauthorizedError extends Error {
+        constructor(message) {
+            super(message)
+        }
     }
-  }
+    global.UnauthorizedError = UnauthorizedError;
 
-  callback(null, user, context);
+    /**
+     * Handle secrets
+     */
+    global.configuration = {};
 }
 
 /**
@@ -36,15 +29,18 @@ function accessOnWeekdaysOnly(user, context, callback) {
  * @param {*} api
  * @param {*} rule 
  */
-const RuleToAction = (event, api, rule) => {
+RuleToAction.convert = (event, api, rule) => {
+    // Initialize globals
+    RuleToAction.init();
+
     // map user from event
     const user = event.user;
 
     // map context from event
-    const context = MapEventToContext(event);
+    const context = RuleToAction.MapEventToContext(event);
 
     // Handle rule callback
-    const callback = (obj, user, context) => {
+    const callback = (obj, newUser, newContext) => {
         if (obj instanceof Error) {
             // handle errors
             console.log(`Error: ${obj.message}`)
@@ -52,6 +48,10 @@ const RuleToAction = (event, api, rule) => {
         } else {
             // success, have "user" and "context" variables
             console.log("Rule ran as Action")
+
+            // compare "newUser" to "user"
+
+            // compare "newContext" to "context"
         }
     }
 
@@ -64,7 +64,7 @@ const RuleToAction = (event, api, rule) => {
  * @param {*} event
  * @return context
  */
-const MapEventToContext = (event) => {
+RuleToAction.MapEventToContext = (event) => {
     const context = {};
     
     // map event variables to context variables
@@ -91,7 +91,23 @@ const MapEventToContext = (event) => {
 
 
 
+/**
+ * The Rule
+ */
+function accessOnWeekdaysOnly(user, context, callback) {
+  if (context.clientName === 'All Applications') {
+    const date = new Date();
+    const d = date.getDay();
 
+    if (d === 0 || d === 6) {
+      return callback(
+        new UnauthorizedError('This app is available during the week')
+      );
+    }
+  }
+
+  callback(null, user, context);
+}
 
 
 /// Test
@@ -300,7 +316,7 @@ api.access.deny = () => {}
 
 const rule = accessOnWeekdaysOnly;
 event.client.name = "TheAppToCheckAccessTo";
-RuleToAction(event, api, rule);
+RuleToAction.convert(event, api, rule);
 
 event.client.name = "OtherApp";
-RuleToAction(event, api, rule);
+RuleToAction.convert(event, api, rule);
