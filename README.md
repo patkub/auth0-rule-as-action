@@ -10,6 +10,7 @@ NPM: https://www.npmjs.com/package/auth0-rule-as-action
 - `callback` method with success and error
 - ID and Access token claims
   - `context.idToken["claim"] = "value"` becomes `api.idToken.setCustomClaim(claim, value)`
+- SAML configuration mappings
 
 ## Example
 

@@ -68,13 +68,20 @@ function handleContextMutations(newContext) {
     
     // set ID and Access token claims that changed between newContext and oldContext
     for (const [claim, value] of Object.entries(newContext.idToken)) {
-        if (newContext.idToken[claim] && newContext.idToken[claim] != oldContext.idToken[claim]) {
+        if (value && value != oldContext.idToken[claim]) {
             api.idToken.setCustomClaim(claim, value)
         }
     }
     for (const [claim, value] of Object.entries(newContext.accessToken)) {
-        if (newContext.accessToken[claim] && newContext.accessToken[claim] != oldContext.accessToken[claim]) {
+        if (value && value != oldContext.accessToken[claim]) {
             api.accessToken.setCustomClaim(claim, value)
+        }
+    }
+
+    // set SAML configuration mappings
+    for (const [claim, value] of Object.entries(newContext.samlConfiguration?.mappings)) {
+        if (value && value != oldContext.samlConfiguration?.mappings[claim]) {
+            api.samlResponse.setAttribute(claim, value);
         }
     }
 }

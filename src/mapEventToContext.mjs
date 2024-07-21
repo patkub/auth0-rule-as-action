@@ -11,6 +11,7 @@ function MapEventToContext(event) {
     const context = {
         accessToken: {},
         idToken: {},
+        samlConfiguration: {},
         multifactor: {},
         sessionID: null
     };
