@@ -5,7 +5,7 @@ const rollupConfig = [{
 		output: [
 			{
 				file: 'dist/RuleToAction.js',
-				format: 'es'
+				format: 'cjs'
 			}
 		]
 }];

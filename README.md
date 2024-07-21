@@ -2,11 +2,13 @@
 
 ##  NOTE: This is an experimental work-in-progress!
 
-This is just a proof-of-concept and is barely useable in it's current state.
+This is just a proof-of-concept and is barely useable in its current state.
 
 
 ## Example
 ```javascript
+const RuleToAction = require("auth0-rule-as-action");
+
 /**
  * The Rule
  */
@@ -25,7 +27,6 @@ function accessOnWeekdaysOnly(user, context, callback) {
   callback(null, user, context);
 }
 
-
 /**
  * Handler that will be called during the execution of a PostLogin flow.
  *
@@ -34,6 +35,7 @@ function accessOnWeekdaysOnly(user, context, callback) {
  */
 exports.onExecutePostLogin = async (event, api) => {
   const rule = accessOnWeekdaysOnly;
+  global.api = api;
   await RuleToAction.convert(event, api, rule);
 };
 ```
