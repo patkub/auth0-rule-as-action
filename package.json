@@ -1,0 +1,15 @@
+{
+  "name": "@patkub/auth0-rule-as-action",
+  "version": "0.1.0",
+  "description": "Run an Auth0 Rule as an Action",
+  "main": "dist/RuleToAction.js",
+  "scripts": {
+    "build": "rollup -c ./rollup.config.mjs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@rollup/wasm-node": "^4.19.0"
+  }
+}

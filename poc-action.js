@@ -65,7 +65,12 @@ RuleToAction.convert = (event, api, rule) => {
  * @return context
  */
 RuleToAction.MapEventToContext = (event) => {
-    const context = {};
+    const context = {
+        accessToken: {},
+        idToken: {},
+        multifactor: {},
+        sessionID: null
+    };
     
     // map event variables to context variables
     // event: https://auth0.com/docs/customize/actions/flows-and-triggers/login-flow/event-object
@@ -79,8 +84,12 @@ RuleToAction.MapEventToContext = (event) => {
     context.connection = event.connection.name;
     context.connectionStrategy = event.connection.strategy;
     context.protocol = event.transaction?.protocol;
-
-    // TODO: add more mappings...
+    context.riskAssessment = event.riskAssessment;
+    context.stats = event.stats;
+    context.request = event.request;
+    context.authentication = event.authentication;
+    context.authorization = event.authorization;
+    context.organization = event.organization;
 
     // Map secrets
     configuration = event.secrets;
@@ -111,11 +120,11 @@ function accessOnWeekdaysOnly(user, context, callback) {
 
 
 /**
-* Handler that will be called during the execution of a PostLogin flow.
-*
-* @param {Event} event - Details about the user and the context in which they are logging in.
-* @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.
-*/
+ * Handler that will be called during the execution of a PostLogin flow.
+ *
+ * @param {Event} event - Details about the user and the context in which they are logging in.
+ * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.
+ */
 exports.onExecutePostLogin = async (event, api) => {
   const rule = accessOnWeekdaysOnly;
   RuleToAction.convert(event, api, rule);
