@@ -10,8 +10,8 @@ chai.use(spies);
 
 const sandbox = chai.spy.sandbox();
 
-import { createEvent } from "./_mocks/event.js"
-import { MapEventToContext } from "../src/mapEventToContext.mjs"
+import { createEvent } from "./_mocks/event.js";
+import { MapEventToContext } from "../src/mapEventToContext.mjs";
 
 let event;
 

@@ -4,7 +4,7 @@ import { MapEventToContext } from "./mapEventToContext.mjs";
 /**
  * globals used by convert method
  */
-const convertGlobals = {}
+let convertGlobals;
 
 /**
  * Auto convert Rule to Action
@@ -24,6 +24,7 @@ async function convert (event, api, rule, options={}) {
     // map context from event
     const context = MapEventToContext(event);
 
+    convertGlobals = {};
     convertGlobals.oldContext = structuredClone(context);
     convertGlobals.api = api;
 
@@ -39,7 +40,7 @@ async function convert (event, api, rule, options={}) {
  * @param {*} newContext 
  */
  
-function defaultRuleCallback(obj, newUser, newContext) {
+async function defaultRuleCallback(obj, newUser, newContext) {
     // pass in api from convert method
     // const event = convertGlobals.event;
     const api = convertGlobals.api;
@@ -86,8 +87,26 @@ function handleContextMutations(newContext) {
     }
 }
 
+/**
+ * Get global object convertGlobals
+ * @return {Object} global convertGlobals
+ */
+function getConvertGlobals() {
+    return convertGlobals;
+}
+
+/**
+ * Set global object convertGlobals
+ * @param {Object} newConvertGlobals new globals
+ */
+function setConvertGlobals(newConvertGlobals) {
+    convertGlobals = newConvertGlobals
+}
+
 export {
     convert,
     defaultRuleCallback,
-    handleContextMutations
+    handleContextMutations,
+    getConvertGlobals,
+    setConvertGlobals
 }
