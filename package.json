@@ -1,7 +1,8 @@
 {
   "name": "auth0-rule-as-action",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Run an Auth0 Rule as an Action",
+  "type": "module",
   "main": "dist/RuleToAction.js",
   "scripts": {
     "build": "rollup -c ./rollup.config.mjs",
