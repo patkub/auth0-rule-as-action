@@ -16,7 +16,8 @@ describe('init', function () {
 
     beforeEach(function () {
         // reset global
-        global = {};
+        delete global.UnauthorizedError;
+        delete global.configuration;
     });
 
     afterEach(function () {
