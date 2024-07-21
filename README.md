@@ -48,5 +48,5 @@ exports.onExecutePostLogin = async (event, api) => {
 
 ### With custom callback
 ```javascript
-await RuleToAction.convert(event, api, rule, RuleToAction.ruleCallback);
+await RuleToAction.convertWithCallback(event, api, rule, RuleToAction.ruleCallback);
 ```
