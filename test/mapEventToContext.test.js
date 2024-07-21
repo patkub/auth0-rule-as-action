@@ -39,7 +39,7 @@ describe('MapEventToContext', function () {
         chai.expect(context.clientMetadata).to.equal(event.client.metadata);
         chai.expect(context.connectionID).to.equal(event.connection.id);
         chai.expect(context.connection).to.equal(event.connection.name);
-        chai.expect(context.connectionStrategy = event.connection.strategy);
+        chai.expect(context.connectionStrategy).to.equal(event.connection.strategy);
         chai.expect(context.connectionMetadata).to.equal(event.connection.metadata);
         chai.expect(context.protocol).to.equal(event.transaction?.protocol);
         chai.expect(context.riskAssessment).to.equal(event.riskAssessment);
