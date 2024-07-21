@@ -11,19 +11,9 @@ const convertGlobals = {}
  * @param {*} event 
  * @param {*} api 
  * @param {*} rule 
- */
-async function convert (event, api, rule) {
-    return convertWithCallback(event, api, rule, ruleCallback);
-}
-
-/**
- * Auto convert Rule to Action
- * @param {*} event 
- * @param {*} api 
- * @param {*} rule 
  * @param {*} ruleCallback 
  */
-async function convertWithCallback (event, api, rule, ruleCallback) {
+async function convert (event, api, rule, ruleCallback) {
     // Initialize globals
     init();
 
@@ -64,6 +54,5 @@ function ruleCallback(obj, newUser, newContext) {
 
 export {
     convert,
-    convertWithCallback,
     ruleCallback
 }
