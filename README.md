@@ -10,7 +10,9 @@ NPM: https://www.npmjs.com/package/auth0-rule-as-action
 - `callback` method with success and error
 - ID and Access token claims
   - `context.idToken["claim"] = "value"` becomes `api.idToken.setCustomClaim(claim, value)`
+  - `context.accessToken["claim"] = "value"` becomes `api.accessToken.setCustomClaim(claim, value)`
 - SAML configuration mappings
+  - `context.samlConfiguration.mappings["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] =  "upn";` becomes `api.samlResponse.setAttribute("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier", "upn");`
 
 ## Example
 
