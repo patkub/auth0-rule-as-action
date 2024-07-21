@@ -36,7 +36,7 @@ async function convert (event, api, rule, ruleCallback) {
  * @param {*} newUser 
  * @param {*} newContext 
  */
-// eslint-disable-next-line no-unused-vars
+ 
 function ruleCallback(obj, newUser, newContext) {
     // pass in api from convert method
     // const event = convertGlobals.event;
