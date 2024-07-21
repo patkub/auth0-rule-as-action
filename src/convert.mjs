@@ -11,9 +11,10 @@ const convertGlobals = {}
  * @param {*} event 
  * @param {*} api 
  * @param {*} rule 
- * @param {*} ruleCallback 
+ * @param {Object} options 
+ * @param {Function} options.ruleCallback callback called by Rule
  */
-async function convert (event, api, rule, ruleCallback) {
+async function convert (event, api, rule, options={}) {
     // Initialize globals
     init();
 
@@ -26,8 +27,9 @@ async function convert (event, api, rule, ruleCallback) {
     convertGlobals.oldContext = structuredClone(context);
     convertGlobals.api = api;
 
+    const callback = options.callback || defaultRuleCallback;
     // Run the rule, result handled by callback
-    rule(user, context, ruleCallback);
+    rule(user, context, callback);
 }
 
 /**
@@ -37,7 +39,7 @@ async function convert (event, api, rule, ruleCallback) {
  * @param {*} newContext 
  */
  
-function ruleCallback(obj, newUser, newContext) {
+function defaultRuleCallback(obj, newUser, newContext) {
     // pass in api from convert method
     // const event = convertGlobals.event;
     const api = convertGlobals.api;
@@ -79,5 +81,6 @@ function handleContextMutations(newContext) {
 
 export {
     convert,
-    ruleCallback
+    defaultRuleCallback,
+    handleContextMutations
 }

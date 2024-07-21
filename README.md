@@ -49,6 +49,14 @@ function accessOnWeekdaysOnly(user, context, callback) {
  */
 exports.onExecutePostLogin = async (event, api) => {
   const rule = accessOnWeekdaysOnly;
-  await RuleToAction.convert(event, api, rule, RuleToAction.ruleCallback);
+  await RuleToAction.convert(event, api, rule);
 };
+```
+
+### Options
+Pass custom Rule callback() method.
+```javascript
+await RuleToAction.convert(event, api, rule, {
+  callback: RuleToAction.defaultRuleCallback
+});
 ```
