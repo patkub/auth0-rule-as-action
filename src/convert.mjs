@@ -23,7 +23,7 @@ async function convert (event, api, rule, ruleCallback) {
     // map context from event
     const context = MapEventToContext(event);
 
-    convertGlobals.context = context;
+    convertGlobals.oldContext = structuredClone(context);
     convertGlobals.api = api;
 
     // Run the rule, result handled by callback
@@ -62,24 +62,18 @@ function ruleCallback(obj, newUser, newContext) {
  */
 function handleContextMutations(newContext) {
     const api = convertGlobals.api;
-    const oldContext = convertGlobals.context;
+    const oldContext = convertGlobals.oldContext;
     
-    // changes between newContext and oldContext
-
-    // get modified ID and Access token claims from context
-    const newIDTokenClaims = newContext["idToken"].filter((key, value) => {
-        oldContext["idToken"][key] != value;
-    });
-    const newAccessTokenClaims = newContext["accessToken"].filter((key, value) => {
-        oldContext["accessToken"][key] != value;
-    });
-    
-    // set ID and Access token claims
-    for (const [claim, value] of newIDTokenClaims.entries()) {
-        api.idToken.setCustomClaim(claim, value)
+    // set ID and Access token claims that changed between newContext and oldContext
+    for (const [claim, value] of Object.entries(newContext.idToken)) {
+        if (newContext.idToken[claim] && newContext.idToken[claim] != oldContext.idToken[claim]) {
+            api.idToken.setCustomClaim(claim, value)
+        }
     }
-    for (const [claim, value] of newAccessTokenClaims.entries()) {
-        api.accessToken.setCustomClaim(claim, value)
+    for (const [claim, value] of Object.entries(newContext.accessToken)) {
+        if (newContext.accessToken[claim] && newContext.accessToken[claim] != oldContext.accessToken[claim]) {
+            api.accessToken.setCustomClaim(claim, value)
+        }
     }
 }
 
