@@ -23,7 +23,7 @@ async function convert (event, api, rule, ruleCallback) {
     // map context from event
     const context = MapEventToContext(event);
 
-    // convertGlobals.event = event;
+    convertGlobals.context = context;
     convertGlobals.api = api;
 
     // Run the rule, result handled by callback
@@ -49,6 +49,37 @@ function ruleCallback(obj, newUser, newContext) {
     } else {
         // success, have "newUser" and "newContext" variables
         console.log("Rule ran as Action")
+
+        // handle changes applied to context by Rule
+        handleContextMutations(newContext);
+        console.log("Handled context changes applied by Rule")
+    }
+}
+
+/**
+ * Handles changes applied to context by Rule
+ * @param {*} context 
+ */
+function handleContextMutations(newContext) {
+    const api = convertGlobals.api;
+    const oldContext = convertGlobals.context;
+    
+    // changes between newContext and oldContext
+
+    // get modified ID and Access token claims from context
+    const newIDTokenClaims = newContext["idToken"].filter((key, value) => {
+        oldContext["idToken"][key] != value;
+    });
+    const newAccessTokenClaims = newContext["accessToken"].filter((key, value) => {
+        oldContext["accessToken"][key] != value;
+    });
+    
+    // set ID and Access token claims
+    for (const [claim, value] of newIDTokenClaims.entries()) {
+        api.idToken.setCustomClaim(claim, value)
+    }
+    for (const [claim, value] of newAccessTokenClaims.entries()) {
+        api.accessToken.setCustomClaim(claim, value)
     }
 }
 
