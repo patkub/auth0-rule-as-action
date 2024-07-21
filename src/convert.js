@@ -1,6 +1,10 @@
 import { init } from "./init.js";
 import { MapEventToContext } from "./mapEventToContext.js";
 
+/**
+ * globals used by convert method
+ */
+const convertGlobals = {}
 
 /**
  * Auto convert Rule to Action
@@ -19,6 +23,9 @@ async function convert (event, api, rule, ruleCallback) {
     // map context from event
     const context = MapEventToContext(event);
 
+    convertGlobals.event = event;
+    convertGlobals.api = api;
+
     // Run the rule, result handled by callback
     rule(user, context, ruleCallback);
 }
@@ -30,6 +37,10 @@ async function convert (event, api, rule, ruleCallback) {
  * @param {*} newContext 
  */
 function ruleCallback(obj, newUser, newContext) {
+    // pass in event and api from convert method
+    const event = convertGlobals.event;
+    const api = convertGlobals.api;
+
     if (obj instanceof Error) {
         // handle errors
         console.log(`Error: ${obj.message}`);

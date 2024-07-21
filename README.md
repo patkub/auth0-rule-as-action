@@ -35,7 +35,6 @@ function accessOnWeekdaysOnly(user, context, callback) {
  */
 exports.onExecutePostLogin = async (event, api) => {
   const rule = accessOnWeekdaysOnly;
-  global.api = api;
   await RuleToAction.convert(event, api, rule);
 };
 ```

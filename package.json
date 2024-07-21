@@ -1,6 +1,6 @@
 {
   "name": "auth0-rule-as-action",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "description": "Run an Auth0 Rule as an Action",
   "main": "dist/RuleToAction.js",
   "scripts": {
