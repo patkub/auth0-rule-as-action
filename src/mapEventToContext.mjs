@@ -23,6 +23,7 @@ function MapEventToContext(event) {
     context.connectionID = event.connection.id;
     context.connection = event.connection.name;
     context.connectionStrategy = event.connection.strategy;
+    context.connectionMetadata = event.connection.metadata;
     context.protocol = event.transaction?.protocol;
     context.riskAssessment = event.riskAssessment;
     context.stats = event.stats;
