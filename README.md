@@ -1,11 +1,18 @@
 # auth0-rule-as-action
 
-##  NOTE: This is an experimental work-in-progress!
+## NOTE: This is an experimental work-in-progress!
 
 This is just a proof-of-concept and is barely useable in its current state.
 
-
 ## Example
+
+### Add as dependency to a Post Login action
+```
+auth0-rule-as-action@latest
+```
+
+### Example Post Login action
+
 ```javascript
 const RuleToAction = require("auth0-rule-as-action");
 
@@ -37,4 +44,9 @@ exports.onExecutePostLogin = async (event, api) => {
   const rule = accessOnWeekdaysOnly;
   await RuleToAction.convert(event, api, rule);
 };
+```
+
+### With custom callback
+```javascript
+await RuleToAction.convert(event, api, rule, RuleToAction.ruleCallback);
 ```

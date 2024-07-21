@@ -11,6 +11,16 @@ const convertGlobals = {}
  * @param {*} event 
  * @param {*} api 
  * @param {*} rule 
+ */
+async function convert (event, api, rule) {
+    return convert(event, api, rule, ruleCallback)
+}
+
+/**
+ * Auto convert Rule to Action
+ * @param {*} event 
+ * @param {*} api 
+ * @param {*} rule 
  * @param {*} ruleCallback 
  */
 async function convert (event, api, rule, ruleCallback) {
@@ -46,12 +56,8 @@ function ruleCallback(obj, newUser, newContext) {
         console.log(`Error: ${obj.message}`);
         api.access.deny(obj.message);
     } else {
-        // success, have "user" and "context" variables
+        // success, have "newUser" and "newContext" variables
         console.log("Rule ran as Action")
-
-        // compare "newUser" to "user"
-
-        // compare "newContext" to "context"
     }
 }
 
