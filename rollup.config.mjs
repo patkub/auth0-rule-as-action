@@ -1,7 +1,7 @@
 // rollup.config.mjs
 
 const rollupConfig = [{
-		input: 'src/RuleToAction.js',
+		input: 'src/RuleToAction.mjs',
 		output: [
 			{
 				file: 'dist/RuleToAction.js',

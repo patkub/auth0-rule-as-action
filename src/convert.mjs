@@ -1,20 +1,10 @@
-import { init } from "./init.js";
-import { MapEventToContext } from "./mapEventToContext.js";
+import { init } from "./init.mjs";
+import { MapEventToContext } from "./mapEventToContext.mjs";
 
 /**
  * globals used by convert method
  */
 const convertGlobals = {}
-
-/**
- * Auto convert Rule to Action
- * @param {*} event 
- * @param {*} api 
- * @param {*} rule 
- */
-async function convert (event, api, rule) {
-    return convert(event, api, rule, ruleCallback)
-}
 
 /**
  * Auto convert Rule to Action
@@ -33,7 +23,7 @@ async function convert (event, api, rule, ruleCallback) {
     // map context from event
     const context = MapEventToContext(event);
 
-    convertGlobals.event = event;
+    // convertGlobals.event = event;
     convertGlobals.api = api;
 
     // Run the rule, result handled by callback
@@ -46,9 +36,10 @@ async function convert (event, api, rule, ruleCallback) {
  * @param {*} newUser 
  * @param {*} newContext 
  */
+// eslint-disable-next-line no-unused-vars
 function ruleCallback(obj, newUser, newContext) {
-    // pass in event and api from convert method
-    const event = convertGlobals.event;
+    // pass in api from convert method
+    // const event = convertGlobals.event;
     const api = convertGlobals.api;
 
     if (obj instanceof Error) {
