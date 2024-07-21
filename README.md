@@ -4,6 +4,8 @@
 
 This is just a proof-of-concept and is barely useable in its current state.
 
+NPM: https://www.npmjs.com/package/auth0-rule-as-action
+
 ## Example
 
 ### Add as dependency to a Post Login action
