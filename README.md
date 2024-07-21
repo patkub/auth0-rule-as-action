@@ -6,6 +6,11 @@ This is just a proof-of-concept and is barely useable in its current state.
 
 NPM: https://www.npmjs.com/package/auth0-rule-as-action
 
+### Currently supported features
+- `callback` method with success and error
+- ID and Access token claims
+  - `context.idToken["claim"] = "value"` becomes `api.idToken.setCustomClaim(claim, value)`
+
 ## Example
 
 ### Add as dependency to a Post Login action
