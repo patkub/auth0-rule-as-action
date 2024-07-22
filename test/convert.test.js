@@ -44,6 +44,46 @@ describe('convert', function () {
         chai.expect(api.access.deny).to.have.been.called.with(obj.message);
     });
 
+    it('defaultRuleCallback handles context changes on success', async function () {
+        // Prepare
+        let newUser, newContext;
+
+        // set api on rule conversion globals
+        let convertGlobals = {
+            api: api,
+            oldContext: {
+                idToken: {},
+                accessToken: {}
+            }
+        };
+        convertGlobals.api = api;
+        setConvertGlobals(convertGlobals);
+
+        newContext = {
+            idToken: {
+                mockIDTokenClaim: "mockIDTokenValue"
+            },
+            accessToken: {
+                mockAccessTokenClaim: "mockAccessTokenValue"
+            },
+            samlConfiguration: {
+                mappings: {
+                    mockSAMLClaim: "mockSAMLValue"
+                }
+            }
+        }
+
+        // Act
+        // success, callback(null, user, context);
+        await defaultRuleCallback(null, newUser, newContext);
+
+        // Assert
+        chai.expect(api.idToken.setCustomClaim).to.have.been.called.with("mockIDTokenClaim", "mockIDTokenValue");
+        chai.expect(api.accessToken.setCustomClaim).to.have.been.called.with("mockAccessTokenClaim", "mockAccessTokenValue");
+        chai.expect(api.samlResponse.setAttribute).to.have.been.called.with("mockSAMLClaim", "mockSAMLValue");
+    });
+
+
     it('setConvertGlobals sets globals for Rule', async function () {
         // Act - Set
         const convertGlobals = {};
