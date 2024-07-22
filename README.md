@@ -1,18 +1,28 @@
 # auth0-rule-as-action
 
-## NOTE: This is an experimental work-in-progress!
+Run an Auth0 Rule as an Action
 
-This is just a proof-of-concept and is barely useable in its current state.
+📦 NPM: https://www.npmjs.com/package/auth0-rule-as-action
 
-NPM: https://www.npmjs.com/package/auth0-rule-as-action
+## Experimental
+
+This is an experiment with a very small feature set.
 
 ### Currently supported features
 - `callback` method with success and error
 - ID and Access token claims
-  - `context.idToken["claim"] = "value"` becomes `api.idToken.setCustomClaim(claim, value)`
-  - `context.accessToken["claim"] = "value"` becomes `api.accessToken.setCustomClaim(claim, value)`
 - SAML configuration mappings
-  - `context.samlConfiguration.mappings["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] =  "upn";` becomes `api.samlResponse.setAttribute("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier", "upn");`
+
+```diff
+-context.idToken["claim"] = "value"
++api.idToken.setCustomClaim(claim, value)
+
+-context.accessToken["claim"] = "value"
++api.accessToken.setCustomClaim(claim, value)
+
+-context.samlConfiguration.mappings["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] = "upn";
++api.samlResponse.setAttribute("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier", "upn");
+```
 
 ## Example
 
