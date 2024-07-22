@@ -40,6 +40,15 @@ const RuleToAction = require("auth0-rule-as-action");
  * The Rule
  */
 function accessOnWeekdaysOnly(user, context, callback) {
+  // ID and Access token claims
+  context.idToken["https://example.com/testIDToken"] = "testIDTokenValue";
+  context.accessToken["https://example.com/testAccessToken"] = "testAccessTokenValue";
+  // SAML
+  context.samlConfiguration.mappings = {
+    'https://example.com/SAML/Attributes/Role': 'role',
+    'https://example.com/SAML/Attributes/RoleSessionName': 'session'
+  };
+  
   if (context.clientName === 'All Applications') {
     const date = new Date();
     const d = date.getDay();
