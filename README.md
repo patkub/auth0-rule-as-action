@@ -23,8 +23,18 @@ const RuleToAction = require("auth0-rule-as-action");
 /**
  * The Rule
  */
-function exampleRule(user, context, callback) { 
-  context.idToken["claim"] = "value";
+function accessOnWeekdaysOnly(user, context, callback) {
+  if (context.clientName === 'All Applications') {
+    const date = new Date();
+    const d = date.getDay();
+
+    if (d === 0 || d === 6) {
+      return callback(
+        new UnauthorizedError('This app is available during the week')
+      );
+    }
+  }
+
   callback(null, user, context);
 }
 
@@ -35,7 +45,8 @@ function exampleRule(user, context, callback) {
  * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.
  */
 exports.onExecutePostLogin = async (event, api) => {
-  await RuleToAction.convert(event, api, exampleRule);
+  const rule = accessOnWeekdaysOnly;
+  await RuleToAction.convert(event, api, rule);
 };
 ```
 
