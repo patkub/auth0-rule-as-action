@@ -14,7 +14,7 @@ let convertGlobals;
  * @param {Object} options 
  * @param {Function} options.ruleCallback callback called by Rule
  */
-async function convert (event, api, rule, options={}) {
+async function convert(event, api, rule, options={}) {
     // Initialize globals
     init();
 
