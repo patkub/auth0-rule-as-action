@@ -13,6 +13,7 @@ const sandbox = chai.spy.sandbox();
 import { createEvent } from "./_mocks/event.js";
 import { api } from "./_mocks/api.js";
 import { setupApiSpy } from "./_helpers/setupApiSpy.js";
+import { UnauthorizedError } from "../src/init.mjs"
 import { convert } from "../src/RuleToAction.mjs"
 
 let event;
