@@ -4,10 +4,7 @@ const js = require("@eslint/js");
 module.exports = [
     js.configs.recommended,
     {
-        languageOptions: { globals: globals.node },
-        rules: {
-        //   "no-unused-vars": "off"
-        },
+        languageOptions: { globals: globals.node }
     },
     {
         ignores: [
