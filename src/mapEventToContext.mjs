@@ -3,7 +3,7 @@
  * @param {*} event
  * @return context
  */
-function MapEventToContext(event) {
+function mapEventToContext(event) {
     // Auth0 Post-Login action Event object: https://auth0.com/docs/customize/actions/flows-and-triggers/login-flow/event-object
     // Auth0 Rules Context object: https://auth0.com/docs/customize/rules/context-object
 
@@ -43,5 +43,5 @@ function MapEventToContext(event) {
 }
 
 export {
-    MapEventToContext
+    mapEventToContext
 }

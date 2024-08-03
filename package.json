@@ -1,6 +1,6 @@
 {
   "name": "auth0-rule-as-action",
-  "version": "0.2.7",
+  "version": "0.3.0",
   "description": "Run an Auth0 Rule as an Action",
   "author": "Patrick Kubiak <epicpatka@gmail.com>",
   "main": "dist/RuleToAction.js",
@@ -8,7 +8,8 @@
     "build": "rollup -c ./rollup.config.mjs",
     "test": "c8 mocha './test/**/*.test.js'",
     "lint:check": "eslint -c ./eslint.config.js ./",
-    "lint": "eslint -c ./eslint.config.js --fix ./"
+    "lint": "eslint -c ./eslint.config.js --fix ./",
+    "release": "npm run lint && npm run build && npm run test"
   },
   "devDependencies": {
     "@eslint/js": "^9.7.0",

@@ -11,11 +11,11 @@ chai.use(spies);
 const sandbox = chai.spy.sandbox();
 
 import { createEvent } from "./_mocks/event.js";
-import { MapEventToContext } from "../src/mapEventToContext.mjs";
+import { mapEventToContext } from "../src/mapEventToContext.mjs";
 
 let event;
 
-describe('MapEventToContext', function () {
+describe('mapEventToContext', function () {
 
     beforeEach(function () {
         // reset Auth0 event
@@ -29,7 +29,7 @@ describe('MapEventToContext', function () {
     it('maps event to context', async function () {
         // Act
         // defined context variables based on event varibles
-        const context = MapEventToContext(event);
+        const context = mapEventToContext(event);
 
         // Assert
         // context variables have been defined based on event variables

@@ -51,10 +51,15 @@ exports.onExecutePostLogin = async (event, api) => {
 ```
 
 ## Options
-Pass custom Rule callback() method.
+
+Pass in custom methods for conversion process.
+
 ```javascript
 await RuleToAction.convert(event, api, rule, {
+  // Rule callback() method
   callback: RuleToAction.defaultRuleCallback
+  // Maps Post-Login action Event variables to Rules Context variables 
+  mapEventToContext: RuleToAction.mapEventToContext
 });
 ```
 
@@ -74,5 +79,6 @@ await RuleToAction.convert(event, api, rule, {
 +api.samlResponse.setAttribute("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier", "upn");
 ```
 
-## Examples
-See [more examples](./docs/examples.md).
+## Docs
+- Explanation of available [npm scripts](./docs/scripts.md).
+- See [more examples](./docs/examples.md).

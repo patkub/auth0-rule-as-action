@@ -1,5 +1,5 @@
 import { init } from "./init.mjs";
-import { MapEventToContext } from "./mapEventToContext.mjs";
+import { mapEventToContext } from "./mapEventToContext.mjs";
 
 /**
  * globals used by convert method
@@ -13,6 +13,7 @@ let convertGlobals;
  * @param {*} rule 
  * @param {Object} options 
  * @param {Function} options.ruleCallback callback called by Rule
+ * @param {Function} options.mapEventToContext maps Post-Login Action event variables to Rule context variables
  */
 async function convert(event, api, rule, options={}) {
     // Initialize globals
@@ -22,7 +23,8 @@ async function convert(event, api, rule, options={}) {
     const user = event.user;
 
     // map context from event
-    const context = MapEventToContext(event);
+    const contextToEventMapper = options.mapEventToContext || mapEventToContext;
+    const context = contextToEventMapper(event);
 
     convertGlobals = {};
     convertGlobals.oldContext = structuredClone(context);

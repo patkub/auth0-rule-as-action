@@ -15,7 +15,7 @@ import { api } from "./_mocks/api.js";
 import { setupApiSpy } from "./_helpers/setupApiSpy.js";
 import { convert, defaultRuleCallback, getConvertGlobals, setConvertGlobals } from "../src/convert.mjs"
 import { UnauthorizedError } from "../src/init.mjs"
-import { MapEventToContext } from "../src/mapEventToContext.mjs";
+import { mapEventToContext } from "../src/mapEventToContext.mjs";
 
 let event;
 
@@ -129,7 +129,7 @@ describe('convert', function () {
             // Get Rule conversion globals
             const recievedConvertGlobals = getConvertGlobals();
             // Maps event variable to context
-            const expectedContext = MapEventToContext(event);
+            const expectedContext = mapEventToContext(event);
             chai.expect(recievedConvertGlobals.oldContext).to.deep.equal(expectedContext);
         });
 
