@@ -57,7 +57,7 @@ Pass in custom methods for conversion process.
 ```javascript
 await RuleToAction.convert(event, api, rule, {
   // Rule callback() method
-  callback: RuleToAction.defaultRuleCallback
+  callback: RuleToAction.defaultRuleCallback,
   // Maps Post-Login action Event variables to Rules Context variables 
   mapEventToContext: RuleToAction.mapEventToContext
 });
