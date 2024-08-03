@@ -47,8 +47,20 @@ exports.onExecutePostLogin = async (event, api) => {
 The following is an example on how to use a custom Rule callback. It adds the ability to handle redirects applied to context.
 
 ```javascript
+const RuleToAction = require("auth0-rule-as-action");
+
+/**
+ * The Rule
+ */
+function simpleRedirectRule(user, context, callback) {
+  context.redirect = {
+    url: "https://example.com/foo"
+  };
+  callback(null, user, context);
+}
+
 exports.onExecutePostLogin = async (event, api) => {
-  const rule = accessOnWeekdaysOnly;
+  const rule = simpleRedirectRule;
 
   // Custom rule callback
   const customRuleCallback = async (obj, newUser, newContext) => {
