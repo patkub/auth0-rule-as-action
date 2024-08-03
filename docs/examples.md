@@ -42,4 +42,30 @@ exports.onExecutePostLogin = async (event, api) => {
 };
 ```
 
+### Customizing Rule Callback
+
+The following is an example on how to use a custom Rule callback. It adds the ability to handle redirects applied to context.
+
+```javascript
+exports.onExecutePostLogin = async (event, api) => {
+  const rule = accessOnWeekdaysOnly;
+
+  // Custom rule callback
+  const customRuleCallback = async (obj, newUser, newContext) => {
+    if (obj === null) {
+      // Handle Redirect
+      if (newContext.redirect?.url) {
+        api.redirect.sendUserTo(newContext.redirect.url);
+      }
+    }
+    // Call default rule callback
+    await RuleToAction.defaultRuleCallback(obj, newUser, newContext);
+  }
+
+  await RuleToAction.convert(event, api, rule, {
+    callback: customRuleCallback
+  });
+};
+```
+
 [Back to README.md](../README.md)
