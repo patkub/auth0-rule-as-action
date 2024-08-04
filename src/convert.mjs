@@ -23,8 +23,8 @@ async function convert(event, api, rule, options={}) {
     const user = event.user;
 
     // map context from event
-    const contextToEventMapper = options.mapEventToContext || mapEventToContext;
-    const context = contextToEventMapper(event);
+    const eventToContextMapper = options.mapEventToContext || mapEventToContext;
+    const context = eventToContextMapper(event);
 
     convertGlobals = {};
     convertGlobals.oldContext = structuredClone(context);
