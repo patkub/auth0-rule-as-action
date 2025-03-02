@@ -1,6 +1,6 @@
 /**
  * Spy on all methods in api object
- * @param {*} sandbox Sinon sandbox
+ * @param {*} sandbox Chai Spies sandbox
  * @param {*} api Auth0 api object
  */
 function setupApiSpy(sandbox, api) {
