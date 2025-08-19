@@ -1,11 +1,11 @@
 "use strict";
 
 import { beforeEach, afterEach, describe, it } from "mocha";
-import { chai } from "./chai.config.js";
+import { chai } from "../chai.config.js";
 const sandbox = chai.spy.sandbox();
 
-import { createEvent } from "./_mocks/event.js";
-import { mapEventToContext } from "../src/mapEventToContext.mjs";
+import { createEvent } from "../_mocks/event.js";
+import { mapEventToContext } from "../../src/mapEventToContext.mjs";
 
 let event;
 

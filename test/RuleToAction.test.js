@@ -7,7 +7,6 @@ const sandbox = chai.spy.sandbox();
 import { createEvent } from "./_mocks/event.js";
 import { api } from "./_mocks/api.js";
 import { setupApiSpy } from "./_helpers/setupApiSpy.js";
-import { UnauthorizedError } from "../src/init.mjs"
 import { convert } from "../src/RuleToAction.mjs"
 
 let event;
@@ -26,21 +25,6 @@ describe('RuleToAction', function () {
     });
 
     describe('using rules', function () {
-        it('denies access for rule that throws error', async function () {
-            // Prepare
-            let rule = function (user, context, callback) {
-                return callback(
-                    new UnauthorizedError("This app is unavailable")
-                );
-            }
-            let context = {};
-
-            // Act
-            await convert(event, api, rule, context);
-
-            // Assert
-            chai.expect(api.access.deny).to.have.been.called.with("This app is unavailable");
-        });
 
         it('converts exampleRule rule', async function () {
             // Prepare

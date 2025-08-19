@@ -67,6 +67,7 @@ await RuleToAction.convert(event, api, rule, {
 - `callback` method with success and error
 - ID and Access token claims
 - SAML configuration mappings
+- Multifactor triggering
 
 ```diff
 -context.idToken["claim"] = "value";
@@ -77,6 +78,9 @@ await RuleToAction.convert(event, api, rule, {
 
 -context.samlConfiguration.mappings["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] = "upn";
 +api.samlResponse.setAttribute("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier", "upn");
+
+-context.multifactor = { provider: "any", allowRememberBrowser: false };
++api.multifactor.enable("any", { allowRememberBrowser: false });
 ```
 
 ## Docs

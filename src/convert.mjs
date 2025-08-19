@@ -44,7 +44,6 @@ async function convert(event, api, rule, options={}) {
  
 async function defaultRuleCallback(obj, newUser, newContext) {
     // pass in api from convert method
-    // const event = convertGlobals.event;
     const api = convertGlobals.api;
 
     if (obj instanceof Error) {
@@ -66,6 +65,7 @@ async function defaultRuleCallback(obj, newUser, newContext) {
  * @param {*} context 
  */
 function handleContextMutations(newContext) {
+    // pass in api and old context from convert method
     const api = convertGlobals.api;
     const oldContext = convertGlobals.oldContext;
     
