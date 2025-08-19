@@ -25,7 +25,7 @@ describe('RuleToAction', function () {
         sandbox.restore();
     });
 
-    describe('using rules', function() {
+    describe('using rules', function () {
         it('denies access for rule that throws error', async function () {
             // Prepare
             let rule = function (user, context, callback) {
@@ -34,10 +34,10 @@ describe('RuleToAction', function () {
                 );
             }
             let context = {};
-    
+
             // Act
             await convert(event, api, rule, context);
-    
+
             // Assert
             chai.expect(api.access.deny).to.have.been.called.with("This app is unavailable");
         });
@@ -50,22 +50,28 @@ describe('RuleToAction', function () {
                 context.accessToken["https://example.com/testAccessToken"] = "testAccessTokenValue";
                 // SAML
                 context.samlConfiguration.mappings = {
-                  'https://example.com/SAML/Attributes/Role': 'role',
-                  'https://example.com/SAML/Attributes/RoleSessionName': 'session'
+                    'https://example.com/SAML/Attributes/Role': 'role',
+                    'https://example.com/SAML/Attributes/RoleSessionName': 'session'
                 };
-                
+                // Multifactor
+                context.multifactor = {
+                    provider: "any",
+                    allowRememberBrowser: false,
+                };
+
                 callback(null, user, context);
             }
             let context = {};
-    
+
             // Act
             await convert(event, api, rule, context);
-    
+
             // Assert
             chai.expect(api.idToken.setCustomClaim).to.have.been.called.with("https://example.com/testIDToken", "testIDTokenValue");
             chai.expect(api.accessToken.setCustomClaim).to.have.been.called.with("https://example.com/testAccessToken", "testAccessTokenValue");
             chai.expect(api.samlResponse.setAttribute).to.have.been.called.with("https://example.com/SAML/Attributes/Role", "role");
             chai.expect(api.samlResponse.setAttribute).to.have.been.called.with("https://example.com/SAML/Attributes/RoleSessionName", "session");
+            chai.expect(api.multifactor.enable).to.have.been.called.with("any", { allowRememberBrowser: false });
         });
     })
 });

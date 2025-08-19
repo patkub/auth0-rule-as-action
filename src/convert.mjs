@@ -87,6 +87,13 @@ function handleContextMutations(newContext) {
             api.samlResponse.setAttribute(claim, value);
         }
     }
+
+    // set multifactor options
+    if (newContext.multifactor?.provider != oldContext.multifactor?.provider) {
+        // "options" is newContext.multifactor without "provider" key
+        const {provider: _, ...options} = newContext.multifactor;
+        api.multifactor.enable(newContext.multifactor.provider, options);
+    }
 }
 
 /**

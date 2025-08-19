@@ -33,23 +33,23 @@ describe('convert', function () {
             // set error
             let errorMsg = "deny login on error";
             obj = new Error(errorMsg);
-    
+
             // set api on rule conversion globals
             let convertGlobals = {};
             convertGlobals.api = api;
             setConvertGlobals(convertGlobals);
-    
+
             // Act
             await defaultRuleCallback(obj, newUser, newContext);
-    
+
             // Assert
             chai.expect(api.access.deny).to.have.been.called.with(obj.message);
         });
-    
+
         it('defaultRuleCallback handles context changes on success', async function () {
             // Prepare
             let newUser, newContext;
-    
+
             // set api on rule conversion globals
             let convertGlobals = {
                 api: api,
@@ -63,7 +63,7 @@ describe('convert', function () {
             };
             convertGlobals.api = api;
             setConvertGlobals(convertGlobals);
-    
+
             newContext = {
                 idToken: {
                     mockIDTokenClaim: "mockIDTokenValue"
@@ -77,34 +77,34 @@ describe('convert', function () {
                     }
                 }
             }
-    
+
             // Act
             // success, callback(null, user, context);
             await defaultRuleCallback(null, newUser, newContext);
-    
+
             // Assert
             chai.expect(api.idToken.setCustomClaim).to.have.been.called.with("mockIDTokenClaim", "mockIDTokenValue");
             chai.expect(api.accessToken.setCustomClaim).to.have.been.called.with("mockAccessTokenClaim", "mockAccessTokenValue");
             chai.expect(api.samlResponse.setAttribute).to.have.been.called.with("mockSAMLClaim", "mockSAMLValue");
         });
-    
-    
+
+
         it('setConvertGlobals sets globals for Rule', async function () {
             // Act - Set
             const convertGlobals = {};
             convertGlobals.api = api;
             convertGlobals.context = {};
             setConvertGlobals(convertGlobals);
-    
+
             // Get
             const recievedConvertGlobals = getConvertGlobals();
-    
+
             // Assert
             chai.expect(recievedConvertGlobals).to.deep.equal(convertGlobals);
         });
     });
 
-    describe('using rules', function() {
+    describe('using rules', function () {
         it('converts empty rule with empty context', async function () {
             // Prepare
             let rule = function (user, context, callback) {
@@ -112,14 +112,14 @@ describe('convert', function () {
                 return callback(null, user, context);
             }
             let context = {};
-    
+
             // Act
             await convert(event, api, rule, context);
-    
+
             // Assert
             // Instantiates global UnauthorizedError
             chai.expect(new global.UnauthorizedError()).to.be.an.instanceof(UnauthorizedError);
-    
+
             // Get Rule conversion globals
             const recievedConvertGlobals = getConvertGlobals();
             // Maps event variable to context
