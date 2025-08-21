@@ -111,10 +111,9 @@ describe('convert', function () {
                 // TODO: implement your rule
                 return callback(null, user, context);
             }
-            let context = {};
 
             // Act
-            await convert(event, api, rule, context);
+            await convert(event, api, rule);
 
             // Assert
             // Instantiates global UnauthorizedError

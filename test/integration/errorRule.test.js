@@ -32,10 +32,9 @@ describe('error rule', function () {
                 new UnauthorizedError("This app is unavailable")
             );
         }
-        let context = {};
 
         // Act
-        await convert(event, api, rule, context);
+        await convert(event, api, rule);
 
         // Assert
         chai.expect(api.access.deny).to.have.been.called.with("This app is unavailable");

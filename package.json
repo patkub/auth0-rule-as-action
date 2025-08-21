@@ -1,6 +1,6 @@
 {
   "name": "auth0-rule-as-action",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "description": "Run an Auth0 Rule as an Action",
   "author": "Patrick Kubiak <epicpatka@gmail.com>",
   "main": "dist/RuleToAction.js",
@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",
-    "@rollup/wasm-node": "^4.46.3",
+    "@rollup/wasm-node": "^4.46.4",
     "c8": "^10.1.3",
     "chai": "^5.3.1",
     "chai-spies": "^1.1.0",
