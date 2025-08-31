@@ -4,18 +4,13 @@ import { beforeEach, afterEach, describe, it } from "mocha";
 import { chai } from "../chai.config.js";
 const sandbox = chai.spy.sandbox();
 
-import { createEvent } from "../_mocks/event.js";
 import { api } from "../_mocks/api.js";
 import { setupApiSpy } from "../_helpers/setupApiSpy.js";
 import { defaultRuleCallback, getConvertGlobals, setConvertGlobals } from "../../src/convert.mjs"
 
-let event;
-
 describe('convert unit', function () {
 
 	beforeEach(function () {
-		// reset Auth0 event
-		event = createEvent();
 		// spy on all Auth0 api methods
 		setupApiSpy(sandbox, api);
 	});
