@@ -14,8 +14,7 @@ function mapEventToContext(event) {
         samlConfiguration: {
             mappings: {}
         },
-        multifactor: {},
-        sessionID: null
+        multifactor: {}
     };
     
     // Map event variables to context variables
@@ -29,6 +28,7 @@ function mapEventToContext(event) {
     context.connectionMetadata = event.connection.metadata;
     context.protocol = event.transaction?.protocol;
     context.riskAssessment = event.riskAssessment;
+    context.sessionID = event.session?.id;
     context.stats = event.stats;
     context.request = event.request;
     context.authentication = event.authentication;
