@@ -15,7 +15,7 @@ let convertGlobals;
  * @param {Function} options.ruleCallback callback called by Rule
  * @param {Function} options.mapEventToContext maps Post-Login Action event variables to Rule context variables
  */
-async function convert(event, api, rule, options={}) {
+async function convert(event, api, rule, options = {}) {
     // Initialize globals
     init();
 
@@ -41,7 +41,6 @@ async function convert(event, api, rule, options={}) {
  * @param {*} newUser 
  * @param {*} newContext 
  */
- 
 async function defaultRuleCallback(obj, newUser, newContext) {
     // pass in api from convert method
     const api = convertGlobals.api;
@@ -50,13 +49,13 @@ async function defaultRuleCallback(obj, newUser, newContext) {
         // handle errors
         console.log(`Error: ${obj.message}`);
         api.access.deny(obj.message);
+    } else if (obj === null && newContext.redirect?.url) {
+        // handle redirect
+        api.redirect.sendUserTo(newContext.redirect.url);
     } else {
         // success, have "newUser" and "newContext" variables
-        console.log("Rule ran as Action")
-
         // handle changes applied to context by Rule
         handleContextMutations(newContext);
-        console.log("Handled context changes applied by Rule")
     }
 }
 
@@ -68,7 +67,7 @@ function handleContextMutations(newContext) {
     // pass in api and old context from convert method
     const api = convertGlobals.api;
     const oldContext = convertGlobals.oldContext;
-    
+
     // set ID and Access token claims that changed between newContext and oldContext
     for (const [claim, value] of Object.entries(newContext.idToken)) {
         if (value && value != oldContext.idToken[claim]) {
@@ -91,7 +90,7 @@ function handleContextMutations(newContext) {
     // set multifactor options
     if (newContext.multifactor?.provider != oldContext.multifactor?.provider) {
         // "options" is newContext.multifactor without "provider" key
-        const {provider, ...options} = newContext.multifactor;
+        const { provider, ...options } = newContext.multifactor;
         api.multifactor.enable(provider, options);
     }
 }

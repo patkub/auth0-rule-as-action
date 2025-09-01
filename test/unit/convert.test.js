@@ -38,6 +38,26 @@ describe('convert unit', function () {
 		chai.expect(api.access.deny).to.have.been.called.with(obj.message);
 	});
 
+	it('defaultRuleCallback handle redirect', async function () {
+		// Prepare
+		let newUser, newContext;
+		// set redirect
+		newContext = {}
+		newContext.redirect = {};
+		newContext.redirect.url = "example.com/foo";
+
+		// set api on rule conversion globals
+		let convertGlobals = {};
+		convertGlobals.api = api;
+		setConvertGlobals(convertGlobals);
+
+		// Act
+		await defaultRuleCallback(null, newUser, newContext);
+
+		// Assert
+		chai.expect(api.redirect.sendUserTo).to.have.been.called.with("example.com/foo");
+	});
+
 	it('defaultRuleCallback handles context changes on success', async function () {
 		// Prepare
 		let newUser, newContext;
