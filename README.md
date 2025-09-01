@@ -65,11 +65,18 @@ await RuleToAction.convert(event, api, rule, {
 
 ## Currently supported features
 - `callback` method with success and error
+- Redirect urls
 - ID and Access token claims
 - SAML configuration mappings
 - Multifactor triggering
 
 ```diff
+-return callback(new UnauthorizedError("This app is unavailable"));
++api.access.deny("This app is unavailable");
+
+-context.redirect = { url: "https://example.com/foo" };
++api.redirect.sendUserTo("https://example.com/foo");
+
 -context.idToken["claim"] = "value";
 +api.idToken.setCustomClaim(claim, value);
 
