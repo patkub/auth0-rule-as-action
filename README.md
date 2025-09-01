@@ -65,6 +65,7 @@ await RuleToAction.convert(event, api, rule, {
 
 ## Currently supported features
 - `callback` method with success and error
+- Secrets
 - Redirect urls
 - ID and Access token claims
 - SAML configuration mappings
