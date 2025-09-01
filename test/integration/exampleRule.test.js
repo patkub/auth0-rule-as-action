@@ -25,10 +25,16 @@ describe('example rule', function () {
   });
 
   it('converts exampleRule rule', async function () {
+
     // Prepare
+    let configuration = {};
+    configuration.TEST_SECRET = "secret_value";
+    
     let rule = function exampleRule(user, context, callback) {
       // ID and Access token claims
       context.idToken["https://example.com/testIDToken"] = "testIDTokenValue";
+      // Secrets
+      context.idToken["https://example.com/testSecret"] = configuration.TEST_SECRET;
       context.accessToken["https://example.com/testAccessToken"] = "testAccessTokenValue";
       // SAML
       context.samlConfiguration.mappings = {
@@ -44,11 +50,16 @@ describe('example rule', function () {
       callback(null, user, context);
     }
 
+    // Define secrets
+    event.secrets = {};
+    event.secrets.TEST_SECRET = "secret_value";
+
     // Act
     await convert(event, api, rule);
 
     // Assert
     chai.expect(api.idToken.setCustomClaim).to.have.been.called.with("https://example.com/testIDToken", "testIDTokenValue");
+    chai.expect(api.idToken.setCustomClaim).to.have.been.called.with("https://example.com/testSecret", event.secrets.TEST_SECRET);
     chai.expect(api.accessToken.setCustomClaim).to.have.been.called.with("https://example.com/testAccessToken", "testAccessTokenValue");
     chai.expect(api.samlResponse.setAttribute).to.have.been.called.with("https://example.com/SAML/Attributes/Role", "role");
     chai.expect(api.samlResponse.setAttribute).to.have.been.called.with("https://example.com/SAML/Attributes/RoleSessionName", "session");

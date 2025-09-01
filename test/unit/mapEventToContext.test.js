@@ -45,4 +45,19 @@ describe('mapEventToContext', function () {
         chai.expect(context.organization).to.equal(event.organization);
     });
 
+    it('maps event secrets to global configuration secrets', async function () {
+        // Prepare
+        event.secrets = {}
+        event.secrets.TEST_SECRET = "secret_value";
+        
+        // Act
+        // defined context variables based on event varibles
+        mapEventToContext(event);
+
+        // Assert
+        // global configuration secrets have been defined based on event secrets
+        chai.expect(global.configuration).to.deep.equal(event.secrets);
+        chai.expect(global.configuration.TEST_SECRET).to.equal(event.secrets.TEST_SECRET);
+    });
+
 });
