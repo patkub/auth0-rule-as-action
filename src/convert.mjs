@@ -63,7 +63,7 @@ async function defaultRuleCallback(obj, newUser, newContext) {
  * Handles changes applied to context by Rule
  * @param {*} context 
  */
-function handleContextMutations(newContext) {
+async function handleContextMutations(newContext) {
     // pass in api and old context from convert method
     const api = convertGlobals.api;
     const oldContext = convertGlobals.oldContext;
