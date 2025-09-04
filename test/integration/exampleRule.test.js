@@ -25,11 +25,7 @@ describe('example rule', function () {
   });
 
   it('converts exampleRule rule', async function () {
-
     // Prepare
-    let configuration = {};
-    configuration.TEST_SECRET = "secret_value";
-    
     let rule = function exampleRule(user, context, callback) {
       // ID and Access token claims
       context.idToken["https://example.com/testIDToken"] = "testIDTokenValue";
@@ -64,5 +60,7 @@ describe('example rule', function () {
     chai.expect(api.samlResponse.setAttribute).to.have.been.called.with("https://example.com/SAML/Attributes/Role", "role");
     chai.expect(api.samlResponse.setAttribute).to.have.been.called.with("https://example.com/SAML/Attributes/RoleSessionName", "session");
     chai.expect(api.multifactor.enable).to.have.been.called.with("any", { allowRememberBrowser: false });
+    // Secrets
+    chai.expect(configuration.TEST_SECRET).to.equal(event.secrets.TEST_SECRET);
   });
 });
