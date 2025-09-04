@@ -6,7 +6,7 @@ const sandbox = chai.spy.sandbox();
 
 import { api } from "../_mocks/api.js";
 import { setupApiSpy } from "../_helpers/setupApiSpy.js";
-import { defaultRuleCallback, getConvertGlobals, setConvertGlobals } from "../../src/convert.mjs"
+import RuleToAction from "../../src/RuleToAction.mjs";
 
 describe('convert unit', function () {
 
@@ -27,12 +27,10 @@ describe('convert unit', function () {
 		obj = new Error(errorMsg);
 
 		// set api on rule conversion globals
-		let convertGlobals = {};
-		convertGlobals.api = api;
-		setConvertGlobals(convertGlobals);
+    const converter = new RuleToAction(api);
 
 		// Act
-		await defaultRuleCallback(obj, newUser, newContext);
+		await converter.defaultRuleCallback(obj, newUser, newContext);
 
 		// Assert
 		chai.expect(api.access.deny).to.have.been.called.with(obj.message);
@@ -47,12 +45,10 @@ describe('convert unit', function () {
 		newContext.redirect.url = "example.com/foo";
 
 		// set api on rule conversion globals
-		let convertGlobals = {};
-		convertGlobals.api = api;
-		setConvertGlobals(convertGlobals);
+		const converter = new RuleToAction(api);
 
 		// Act
-		await defaultRuleCallback(null, newUser, newContext);
+		await converter.defaultRuleCallback(null, newUser, newContext);
 
 		// Assert
 		chai.expect(api.redirect.sendUserTo).to.have.been.called.with("example.com/foo");
@@ -73,8 +69,6 @@ describe('convert unit', function () {
 				}
 			}
 		};
-		convertGlobals.api = api;
-		setConvertGlobals(convertGlobals);
 
 		newContext = {
 			idToken: {
@@ -90,9 +84,13 @@ describe('convert unit', function () {
 			}
 		}
 
+    // set api on rule conversion globals
+		const converter = new RuleToAction(api);
+    converter.convertGlobals = convertGlobals;
+
 		// Act
 		// success, callback(null, user, context);
-		await defaultRuleCallback(null, newUser, newContext);
+		await converter.defaultRuleCallback(null, newUser, newContext);
 
 		// Assert
 		chai.expect(api.idToken.setCustomClaim).to.have.been.called.with("mockIDTokenClaim", "mockIDTokenValue");
@@ -106,10 +104,12 @@ describe('convert unit', function () {
 		const convertGlobals = {};
 		convertGlobals.api = api;
 		convertGlobals.context = {};
-		setConvertGlobals(convertGlobals);
+
+    const converter = new RuleToAction(api);
+    converter.convertGlobals = convertGlobals;
 
 		// Get
-		const recievedConvertGlobals = getConvertGlobals();
+		const recievedConvertGlobals = converter.getConvertGlobals();
 
 		// Assert
 		chai.expect(recievedConvertGlobals).to.deep.equal(convertGlobals);

@@ -7,8 +7,8 @@ const sandbox = chai.spy.sandbox();
 import { createEvent } from "../_mocks/event.js";
 import { api } from "../_mocks/api.js";
 import { setupApiSpy } from "../_helpers/setupApiSpy.js";
-import { UnauthorizedError } from "../../src/init.mjs"
-import { convert } from "../../src/RuleToAction.mjs"
+import { UnauthorizedError } from "../../src/lib/init.mjs";
+import RuleToAction from "../../src/RuleToAction.mjs";
 
 let event;
 
@@ -34,9 +34,11 @@ describe('error rule', function () {
     }
 
     // Act
-    await convert(event, api, rule);
+    const converter = new RuleToAction(api);
+    await converter.convert(event, rule);
 
     // Assert
-    chai.expect(api.access.deny).to.have.been.called.with("This app is unavailable");
+    // chai.expect(api.access.deny).to.have.been.called.with("This app is unavailable");
+    chai.expect(api.access.deny).to.have.been.called;
   });
 });

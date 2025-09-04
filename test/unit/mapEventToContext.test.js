@@ -5,7 +5,7 @@ import { chai } from "../chai.config.js";
 const sandbox = chai.spy.sandbox();
 
 import { createEvent } from "../_mocks/event.js";
-import { mapEventToContext } from "../../src/mapEventToContext.mjs";
+import { mapEventToContext } from "../../src/lib/mapEventToContext.mjs";
 
 let event;
 

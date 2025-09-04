@@ -7,7 +7,7 @@ const sandbox = chai.spy.sandbox();
 import { createEvent } from "../_mocks/event.js";
 import { api } from "../_mocks/api.js";
 import { setupApiSpy } from "../_helpers/setupApiSpy.js";
-import { convert } from "../../src/RuleToAction.mjs"
+import RuleToAction from "../../src/RuleToAction.mjs"
 
 let event;
 
@@ -37,7 +37,8 @@ describe('secrets rule', function () {
       event.secrets.TEST_SECRET = "secret_value";
   
       // Act
-      await convert(event, api, rule);
+      const converter = new RuleToAction(api);
+      await converter.convert(event, rule);
   
       // Assert
       chai.expect(api.idToken.setCustomClaim).to.have.been.called.with("https://example.com/testSecret", event.secrets.TEST_SECRET);

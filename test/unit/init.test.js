@@ -4,7 +4,7 @@ import { beforeEach, afterEach, describe, it } from "mocha";
 import { chai } from "../chai.config.js";
 const sandbox = chai.spy.sandbox();
 
-import { init } from "../../src/init.mjs";
+import { init } from "../../src/lib/init.mjs";
 
 describe('init', function () {
 

@@ -7,9 +7,9 @@ const sandbox = chai.spy.sandbox();
 import { createEvent } from "../_mocks/event.js";
 import { api } from "../_mocks/api.js";
 import { setupApiSpy } from "../_helpers/setupApiSpy.js";
-import { convert, getConvertGlobals } from "../../src/convert.mjs"
-import { UnauthorizedError } from "../../src/init.mjs"
-import { mapEventToContext } from "../../src/mapEventToContext.mjs";
+import { UnauthorizedError } from "../../src/lib/init.mjs";
+import { mapEventToContext } from "../../src/lib/mapEventToContext.mjs";
+import RuleToAction from "../../src/RuleToAction.mjs";
 
 let event;
 
@@ -34,14 +34,15 @@ describe('emptyRule', function () {
     }
 
     // Act
-    await convert(event, api, rule);
+    const converter = new RuleToAction(api);
+    await converter.convert(event, rule);
 
     // Assert
     // Instantiates global UnauthorizedError
     chai.expect(new global.UnauthorizedError()).to.be.an.instanceof(UnauthorizedError);
 
     // Get Rule conversion globals
-    const recievedConvertGlobals = getConvertGlobals();
+    const recievedConvertGlobals = converter.getConvertGlobals();
     // Maps event variable to context
     const expectedContext = mapEventToContext(event);
     chai.expect(recievedConvertGlobals.oldContext).to.deep.equal(expectedContext);
