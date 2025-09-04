@@ -63,6 +63,9 @@ function simpleRedirectRule(user, context, callback) {
 exports.onExecutePostLogin = async (event, api) => {
   const rule = simpleRedirectRule;
 
+  // Instantiate a Rule to Action converter
+  const converter = new RuleToAction(api);
+
   // Custom rule callback
   const customRuleCallback = async (obj, newUser, newContext) => {
     if (obj === null) {
@@ -72,10 +75,10 @@ exports.onExecutePostLogin = async (event, api) => {
       }
     }
     // Call default rule callback
-    await RuleToAction.defaultRuleCallback(obj, newUser, newContext);
+    await converter.defaultRuleCallback(obj, newUser, newContext);
   }
 
-  const converter = new RuleToAction(api);
+  // Run the Rule as an Action
   await converter.convert(event, rule, {
     callback: customRuleCallback
   });
