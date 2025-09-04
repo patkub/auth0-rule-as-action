@@ -38,7 +38,8 @@ function accessOnWeekdaysOnly(user, context, callback) {
  */
 exports.onExecutePostLogin = async (event, api) => {
   const rule = accessOnWeekdaysOnly;
-  await RuleToAction.convert(event, api, rule);
+  const converter = new RuleToAction(api);
+  await converter.convert(event, rule);
 };
 ```
 
@@ -74,7 +75,8 @@ exports.onExecutePostLogin = async (event, api) => {
     await RuleToAction.defaultRuleCallback(obj, newUser, newContext);
   }
 
-  await RuleToAction.convert(event, api, rule, {
+  const converter = new RuleToAction(api);
+  await converter.convert(event, rule, {
     callback: customRuleCallback
   });
 };

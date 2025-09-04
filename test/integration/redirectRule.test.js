@@ -7,7 +7,7 @@ const sandbox = chai.spy.sandbox();
 import { createEvent } from "../_mocks/event.js";
 import { api } from "../_mocks/api.js";
 import { setupApiSpy } from "../_helpers/setupApiSpy.js";
-import { convert } from "../../src/RuleToAction.mjs"
+import RuleToAction from "../../src/RuleToAction.mjs"
 
 let event;
 
@@ -34,7 +34,8 @@ describe('redirect rule', function () {
     }
 
     // Act
-    await convert(event, api, rule);
+    const converter = new RuleToAction(api);
+    await converter.convert(event, rule);
 
     // Assert
     chai.expect(api.redirect.sendUserTo).to.have.been.called.with("https://example.com/foo");
