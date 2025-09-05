@@ -4,9 +4,15 @@ Run an Auth0 Rule as an Action
 
 📦 NPM: https://www.npmjs.com/package/auth0-rule-as-action
 
-## Experimental
+## How this works
 
-This is an experiment with a very small feature set.
+This library can be used in an Auth0 Post-Login action to run old Rules as Actions.
+
+The basic workflow is as follows:
+
+- Derives old user and context objects from the event object
+- Runs the rule, which mutates the context object
+- Makes api calls based on changes to the context object
 
 ## Example
 
