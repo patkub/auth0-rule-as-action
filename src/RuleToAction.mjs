@@ -10,10 +10,10 @@ export default class RuleToAction {
 
   /**
    * Auto convert Rule to Action
-   * @param {*} event
-   * @param {*} rule
-   * @param {Object} options
-   * @param {Function} options.ruleCallback callback called by Rule
+   * @param {Object} event Post-Login Action event
+   * @param {Function} rule Auth0 Rule function
+   * @param {Object} options  options
+   * @param {Function} options.callback callback called by Rule
    * @param {Function} options.mapEventToContext maps Post-Login Action event variables to Rule context variables
    */
   async convert(event, rule, options = {}) {
@@ -46,8 +46,8 @@ export default class RuleToAction {
 
   /**
    * Map event variables to context variables
-   * @param {*} event
-   * @return context
+   * @param {Object} event Post-Login Action event
+   * @return {Object} context
    */
   mapEventToContext(event) {
     return mapEventToContext(event);
@@ -63,9 +63,9 @@ export default class RuleToAction {
 
   /**
    * Handle Rule callback function
-   * @param {*} obj
-   * @param {*} newUser
-   * @param {*} newContext
+   * @param {Object} obj
+   * @param {Object} newUser Rule modified user object
+   * @param {Object} newContext Rule modified context object
    */
   async defaultRuleCallback(obj, newUser, newContext) {
     // pass in api from convert method
@@ -87,7 +87,7 @@ export default class RuleToAction {
 
   /**
    * Handles changes applied to context by Rule
-   * @param {*} context
+   * @param {Object} context Rule modified context object
    */
   async handleContextMutations(newContext) {
     // pass in api and old context from convert method

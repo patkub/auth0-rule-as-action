@@ -1,7 +1,7 @@
 /**
  * Map event variables to context variables
- * @param {*} event
- * @return context
+ * @param {Object} event Post-Login Action event
+ * @return {Object} context
  */
 function mapEventToContext(event) {
   // Auth0 Post-Login action Event object: https://auth0.com/docs/customize/actions/flows-and-triggers/login-flow/event-object

@@ -1,7 +1,7 @@
 /**
  * Spy on all methods in api object
- * @param {*} sandbox Chai Spies sandbox
- * @param {*} api Auth0 api object
+ * @param {ChaiSpies.Sandbox} sandbox Chai Spies sandbox
+ * @param {Object} api Auth0 api object
  */
 function setupApiSpy(sandbox, api) {
   for (const key of Object.keys(api)) {
