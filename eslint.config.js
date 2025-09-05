@@ -18,20 +18,3 @@ export default [
   },
   eslintConfigPrettier,
 ];
-
-// export default [
-//   configs.recommended,
-//   {
-//     languageOptions: {
-//       globals: {
-//         ...node,
-//         configuration: "writable",
-//         UnauthorizedError: "writable",
-//       },
-//     },
-//   },
-//   {
-//     ignores: ["dist/"],
-//   },
-//   eslintConfigPrettier,
-// ];
