@@ -105,6 +105,32 @@ describe("convert unit", function () {
       .to.have.been.called.with("mockSAMLClaim", "mockSAMLValue");
   });
 
+  it("defaultRuleCallback handles empty context", async function () {
+    // Prepare
+    let newUser, newContext;
+
+    // set api on rule conversion globals
+    let convertGlobals = {
+      api: api,
+      oldContext: {},
+    };
+
+    newContext = {};
+
+    // set api on rule conversion globals
+    const converter = new RuleToAction(api);
+    converter.convertGlobals = convertGlobals;
+
+    // Act
+    // success, callback(null, user, context);
+    await converter.defaultRuleCallback(null, newUser, newContext);
+
+    // Assert
+    chai.expect(api.idToken.setCustomClaim).to.have.not.been.called;
+    chai.expect(api.accessToken.setCustomClaim).to.have.not.been.called;
+    chai.expect(api.samlResponse.setAttribute).to.have.not.been.called;
+  });
+
   it("setConvertGlobals sets globals for Rule", async function () {
     // Act - Set
     const convertGlobals = {};
