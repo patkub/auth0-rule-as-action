@@ -11,6 +11,7 @@ This is an experiment with a very small feature set.
 ## Example
 
 ### Add as dependency to a Post Login action
+
 ```
 auth0-rule-as-action@latest
 ```
@@ -24,13 +25,13 @@ const RuleToAction = require("auth0-rule-as-action");
  * The Rule
  */
 function accessOnWeekdaysOnly(user, context, callback) {
-  if (context.clientName === 'All Applications') {
+  if (context.clientName === "All Applications") {
     const date = new Date();
     const d = date.getDay();
 
     if (d === 0 || d === 6) {
       return callback(
-        new UnauthorizedError('This app is available during the week')
+        new UnauthorizedError("This app is available during the week"),
       );
     }
   }
@@ -62,12 +63,13 @@ const converter = new RuleToAction(api);
 await converter.convert(event, rule, {
   // Rule callback() method
   callback: converter.defaultRuleCallback,
-  // Maps Post-Login action Event variables to Rules Context variables 
-  mapEventToContext: converter.mapEventToContext
+  // Maps Post-Login action Event variables to Rules Context variables
+  mapEventToContext: converter.mapEventToContext,
 });
 ```
 
 ## Currently supported features
+
 - `callback` method with success and error
 - Secrets
 - Redirect urls
@@ -96,5 +98,6 @@ await converter.convert(event, rule, {
 ```
 
 ## Docs
+
 - Explanation of available [npm scripts](./docs/scripts.md).
 - See [more examples](./docs/examples.md).

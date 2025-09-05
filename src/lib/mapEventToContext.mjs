@@ -12,9 +12,9 @@ function mapEventToContext(event) {
     accessToken: {},
     idToken: {},
     samlConfiguration: {
-      mappings: {}
+      mappings: {},
     },
-    multifactor: {}
+    multifactor: {},
   };
 
   // Map event variables to context variables
@@ -42,6 +42,4 @@ function mapEventToContext(event) {
   return context;
 }
 
-export {
-  mapEventToContext
-};
+export { mapEventToContext };

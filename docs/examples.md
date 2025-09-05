@@ -9,20 +9,21 @@ const RuleToAction = require("auth0-rule-as-action");
 function accessOnWeekdaysOnly(user, context, callback) {
   // ID and Access token claims
   context.idToken["https://example.com/testIDToken"] = "testIDTokenValue";
-  context.accessToken["https://example.com/testAccessToken"] = "testAccessTokenValue";
+  context.accessToken["https://example.com/testAccessToken"] =
+    "testAccessTokenValue";
   // SAML
   context.samlConfiguration.mappings = {
-    'https://example.com/SAML/Attributes/Role': 'role',
-    'https://example.com/SAML/Attributes/RoleSessionName': 'session'
+    "https://example.com/SAML/Attributes/Role": "role",
+    "https://example.com/SAML/Attributes/RoleSessionName": "session",
   };
-  
-  if (context.clientName === 'All Applications') {
+
+  if (context.clientName === "All Applications") {
     const date = new Date();
     const d = date.getDay();
 
     if (d === 0 || d === 6) {
       return callback(
-        new UnauthorizedError('This app is available during the week')
+        new UnauthorizedError("This app is available during the week"),
       );
     }
   }
@@ -55,7 +56,7 @@ const RuleToAction = require("auth0-rule-as-action");
  */
 function simpleRedirectRule(user, context, callback) {
   context.redirect = {
-    url: "https://example.com/foo"
+    url: "https://example.com/foo",
   };
   callback(null, user, context);
 }
@@ -76,11 +77,11 @@ exports.onExecutePostLogin = async (event, api) => {
     }
     // Call default rule callback
     await converter.defaultRuleCallback(obj, newUser, newContext);
-  }
+  };
 
   // Run the Rule as an Action
   await converter.convert(event, rule, {
-    callback: customRuleCallback
+    callback: customRuleCallback,
   });
 };
 ```

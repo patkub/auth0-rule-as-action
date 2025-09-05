@@ -13,8 +13,7 @@ import RuleToAction from "../../src/RuleToAction.mjs";
 
 let event;
 
-describe('emptyRule', function () {
-
+describe("emptyRule", function () {
   beforeEach(function () {
     // reset Auth0 event
     event = createEvent();
@@ -26,12 +25,12 @@ describe('emptyRule', function () {
     sandbox.restore();
   });
 
-  it('converts empty rule with empty context', async function () {
+  it("converts empty rule with empty context", async function () {
     // Prepare
     let rule = function (user, context, callback) {
       // TODO: implement your rule
       return callback(null, user, context);
-    }
+    };
 
     // Act
     const converter = new RuleToAction(api);
@@ -39,12 +38,16 @@ describe('emptyRule', function () {
 
     // Assert
     // Instantiates global UnauthorizedError
-    chai.expect(new global.UnauthorizedError()).to.be.an.instanceof(UnauthorizedError);
+    chai
+      .expect(new global.UnauthorizedError())
+      .to.be.an.instanceof(UnauthorizedError);
 
     // Get Rule conversion globals
     const recievedConvertGlobals = converter.getConvertGlobals();
     // Maps event variable to context
     const expectedContext = mapEventToContext(event);
-    chai.expect(recievedConvertGlobals.oldContext).to.deep.equal(expectedContext);
+    chai
+      .expect(recievedConvertGlobals.oldContext)
+      .to.deep.equal(expectedContext);
   });
 });

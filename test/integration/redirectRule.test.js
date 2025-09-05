@@ -7,12 +7,11 @@ const sandbox = chai.spy.sandbox();
 import { createEvent } from "../_mocks/event.js";
 import { api } from "../_mocks/api.js";
 import { setupApiSpy } from "../_helpers/setupApiSpy.js";
-import RuleToAction from "../../src/RuleToAction.mjs"
+import RuleToAction from "../../src/RuleToAction.mjs";
 
 let event;
 
-describe('redirect rule', function () {
-
+describe("redirect rule", function () {
   beforeEach(function () {
     // reset Auth0 event
     event = createEvent();
@@ -24,20 +23,22 @@ describe('redirect rule', function () {
     sandbox.restore();
   });
 
-  it('converts redirect rule', async function () {
+  it("converts redirect rule", async function () {
     // Prepare
     let rule = function simpleRedirectRule(user, context, callback) {
       context.redirect = {
-        url: "https://example.com/foo"
+        url: "https://example.com/foo",
       };
       callback(null, user, context);
-    }
+    };
 
     // Act
     const converter = new RuleToAction(api);
     await converter.convert(event, rule);
 
     // Assert
-    chai.expect(api.redirect.sendUserTo).to.have.been.called.with("https://example.com/foo");
+    chai
+      .expect(api.redirect.sendUserTo)
+      .to.have.been.called.with("https://example.com/foo");
   });
 });

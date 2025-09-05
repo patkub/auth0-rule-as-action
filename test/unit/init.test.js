@@ -6,27 +6,25 @@ const sandbox = chai.spy.sandbox();
 
 import { init } from "../../src/lib/init.mjs";
 
-describe('init', function () {
+describe("init", function () {
+  beforeEach(function () {
+    // reset global
+    delete global.UnauthorizedError;
+    delete global.configuration;
+  });
 
-    beforeEach(function () {
-        // reset global
-        delete global.UnauthorizedError;
-        delete global.configuration;
-    });
+  afterEach(function () {
+    sandbox.restore();
+  });
 
-    afterEach(function () {
-        sandbox.restore();
-    });
+  it("initializes Rule globals", async function () {
+    // Act
+    const result = init();
+    const unauthorizedError = new global.UnauthorizedError();
 
-    it('initializes Rule globals', async function () {
-        // Act
-        const result = init();
-        const unauthorizedError = new global.UnauthorizedError();
-
-        // Assert
-        chai.expect(result).to.be.undefined;
-        chai.expect(unauthorizedError).to.be.an.instanceOf(Error);
-        chai.expect(global.configuration).to.be.an("object").that.is.empty;
-    });
-
+    // Assert
+    chai.expect(result).to.be.undefined;
+    chai.expect(unauthorizedError).to.be.an.instanceOf(Error);
+    chai.expect(global.configuration).to.be.an("object").that.is.empty;
+  });
 });

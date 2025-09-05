@@ -12,8 +12,7 @@ import RuleToAction from "../../src/RuleToAction.mjs";
 
 let event;
 
-describe('error rule', function () {
-
+describe("error rule", function () {
   beforeEach(function () {
     // reset Auth0 event
     event = createEvent();
@@ -25,13 +24,11 @@ describe('error rule', function () {
     sandbox.restore();
   });
 
-  it('denies access for rule that throws error', async function () {
+  it("denies access for rule that throws error", async function () {
     // Prepare
     let rule = function (user, context, callback) {
-      return callback(
-        new UnauthorizedError("This app is unavailable")
-      );
-    }
+      return callback(new UnauthorizedError("This app is unavailable"));
+    };
 
     // Act
     const converter = new RuleToAction(api);

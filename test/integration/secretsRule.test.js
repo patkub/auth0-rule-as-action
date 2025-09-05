@@ -7,12 +7,11 @@ const sandbox = chai.spy.sandbox();
 import { createEvent } from "../_mocks/event.js";
 import { api } from "../_mocks/api.js";
 import { setupApiSpy } from "../_helpers/setupApiSpy.js";
-import RuleToAction from "../../src/RuleToAction.mjs"
+import RuleToAction from "../../src/RuleToAction.mjs";
 
 let event;
 
-describe('secrets rule', function () {
-
+describe("secrets rule", function () {
   beforeEach(function () {
     // reset Auth0 event
     event = createEvent();
@@ -24,25 +23,31 @@ describe('secrets rule', function () {
     sandbox.restore();
   });
 
-  it('converts secrets rule', async function () {
-      // Prepare
-      let rule = function exampleRule(user, context, callback) {
-        // Secrets
-        context.idToken["https://example.com/testSecret"] = configuration.TEST_SECRET;
-        callback(null, user, context);
-      }
-  
-      // Define secrets
-      event.secrets = {};
-      event.secrets.TEST_SECRET = "secret_value";
-  
-      // Act
-      const converter = new RuleToAction(api);
-      await converter.convert(event, rule);
-  
-      // Assert
-      chai.expect(api.idToken.setCustomClaim).to.have.been.called.with("https://example.com/testSecret", event.secrets.TEST_SECRET);
+  it("converts secrets rule", async function () {
+    // Prepare
+    let rule = function exampleRule(user, context, callback) {
       // Secrets
-      chai.expect(configuration.TEST_SECRET).to.equal(event.secrets.TEST_SECRET);
-    });
+      context.idToken["https://example.com/testSecret"] =
+        configuration.TEST_SECRET;
+      callback(null, user, context);
+    };
+
+    // Define secrets
+    event.secrets = {};
+    event.secrets.TEST_SECRET = "secret_value";
+
+    // Act
+    const converter = new RuleToAction(api);
+    await converter.convert(event, rule);
+
+    // Assert
+    chai
+      .expect(api.idToken.setCustomClaim)
+      .to.have.been.called.with(
+        "https://example.com/testSecret",
+        event.secrets.TEST_SECRET,
+      );
+    // Secrets
+    chai.expect(configuration.TEST_SECRET).to.equal(event.secrets.TEST_SECRET);
+  });
 });

@@ -4,13 +4,16 @@
   "description": "Run an Auth0 Rule as an Action",
   "author": "Patrick Kubiak <epicpatka@gmail.com>",
   "main": "dist/RuleToAction.js",
+  "type": "module",
   "scripts": {
     "build": "rollup -c ./rollup.config.mjs",
     "test": "c8 mocha './test/**/*.test.js'",
     "lint:check": "eslint -c ./eslint.config.js ./",
     "lint": "eslint -c ./eslint.config.js --fix ./",
+    "format:check": "prettier --check .",
+    "format": "prettier --write .",
     "ncu:minor": "npm-check-updates -u -t minor",
-    "release": "npm run lint && npm run build && npm run test"
+    "release": "npm run lint && npm run format && npm run build && npm run test"
   },
   "devDependencies": {
     "@eslint/js": "^9.34.0",
@@ -19,8 +22,11 @@
     "chai": "^6.0.1",
     "chai-spies": "^1.1.0",
     "eslint": "^9.34.0",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^16.3.0",
     "mocha": "^11.7.2",
-    "npm-check-updates": "^18.0.3"
+    "npm-check-updates": "^18.0.3",
+    "prettier": "^3.6.2"
   },
   "repository": "github:patkub/auth0-rule-as-action",
   "homepage": "https://github.com/patkub/auth0-rule-as-action",

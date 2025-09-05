@@ -2,24 +2,21 @@
  * Initialize globals
  */
 function init() {
-    global.UnauthorizedError = UnauthorizedError;
+  global.UnauthorizedError = UnauthorizedError;
 
-    /**
-     * Handle secrets
-     */
-    global.configuration = {};
+  /**
+   * Handle secrets
+   */
+  global.configuration = {};
 }
 
 /**
  * Define errors used in rules
  */
 class UnauthorizedError extends Error {
-    constructor(message) {
-        super(message)
-    }
+  constructor(message) {
+    super(message);
+  }
 }
 
-export {
-    init,
-    UnauthorizedError
-}
+export { init, UnauthorizedError };
