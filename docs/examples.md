@@ -16,6 +16,7 @@ function accessOnWeekdaysOnly(user, context, callback) {
     "https://example.com/SAML/Attributes/Role": "role",
     "https://example.com/SAML/Attributes/RoleSessionName": "session",
   };
+  context.samlConfiguration.lifetimeInSeconds = 3600;
 
   if (context.clientName === "All Applications") {
     const date = new Date();

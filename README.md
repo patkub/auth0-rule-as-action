@@ -99,6 +99,9 @@ await converter.convert(event, rule, {
 -context.samlConfiguration.mappings["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] = "upn";
 +api.samlResponse.setAttribute("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier", "upn");
 
+-context.samlConfiguration.lifetimeInSeconds = 3600;
++api.samlResponse.setLifetimeInSeconds(3600);
+
 -context.multifactor = { provider: "any", allowRememberBrowser: false };
 +api.multifactor.enable("any", { allowRememberBrowser: false });
 ```

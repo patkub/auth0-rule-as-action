@@ -82,6 +82,11 @@ describe("convert unit", function () {
         mappings: {
           mockSAMLClaim: "mockSAMLValue",
         },
+        lifetimeInSeconds: 3600,
+      },
+      multifactor: {
+        provider: "any",
+        allowRememberBrowser: false,
       },
     };
 
@@ -103,6 +108,12 @@ describe("convert unit", function () {
     chai
       .expect(api.samlResponse.setAttribute)
       .to.have.been.called.with("mockSAMLClaim", "mockSAMLValue");
+    chai
+      .expect(api.samlResponse.setLifetimeInSeconds)
+      .to.have.been.called.with(3600);
+    chai
+      .expect(api.multifactor.enable)
+      .to.have.been.called.with("any", { allowRememberBrowser: false });
   });
 
   it("defaultRuleCallback handles empty context", async function () {

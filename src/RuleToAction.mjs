@@ -115,8 +115,22 @@ export default class RuleToAction {
       }
     }
 
+    // set SAML configuration lifetime
+    if (
+      newContext.samlConfiguration?.lifetimeInSeconds &&
+      newContext.samlConfiguration?.lifetimeInSeconds !=
+        oldContext.samlConfiguration?.lifetimeInSeconds
+    ) {
+      api.samlResponse.setLifetimeInSeconds(
+        newContext.samlConfiguration.lifetimeInSeconds,
+      );
+    }
+
     // set multifactor options
-    if (newContext.multifactor?.provider != oldContext.multifactor?.provider) {
+    if (
+      newContext.multifactor?.provider &&
+      newContext.multifactor?.provider != oldContext.multifactor?.provider
+    ) {
       // "options" is newContext.multifactor without "provider" key
       const { provider, ...options } = newContext.multifactor;
       api.multifactor.enable(provider, options);

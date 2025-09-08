@@ -38,6 +38,7 @@ describe("example rule", function () {
         "https://example.com/SAML/Attributes/Role": "role",
         "https://example.com/SAML/Attributes/RoleSessionName": "session",
       };
+      context.samlConfiguration.lifetimeInSeconds = 3600;
       // Multifactor
       context.multifactor = {
         provider: "any",
@@ -80,6 +81,9 @@ describe("example rule", function () {
         "https://example.com/SAML/Attributes/RoleSessionName",
         "session",
       );
+    chai
+      .expect(api.samlResponse.setLifetimeInSeconds)
+      .to.have.been.called.with(3600);
     chai
       .expect(api.multifactor.enable)
       .to.have.been.called.with("any", { allowRememberBrowser: false });
