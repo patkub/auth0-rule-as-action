@@ -6,7 +6,7 @@ const RuleToAction = require("auth0-rule-as-action");
 /**
  * The Rule
  */
-function accessOnWeekdaysOnly(user, context, callback) {
+function exampleRule(user, context, callback) {
   // ID and Access token claims
   context.idToken["https://example.com/testIDToken"] = "testIDTokenValue";
   context.accessToken["https://example.com/testAccessToken"] =
@@ -17,6 +17,11 @@ function accessOnWeekdaysOnly(user, context, callback) {
     "https://example.com/SAML/Attributes/RoleSessionName": "session",
   };
   context.samlConfiguration.lifetimeInSeconds = 3600;
+  // Multifactor
+  context.multifactor = {
+    provider: "any",
+    allowRememberBrowser: false,
+  };
 
   if (context.clientName === "All Applications") {
     const date = new Date();
@@ -39,7 +44,7 @@ function accessOnWeekdaysOnly(user, context, callback) {
  * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.
  */
 exports.onExecutePostLogin = async (event, api) => {
-  const rule = accessOnWeekdaysOnly;
+  const rule = exampleRule;
   const converter = new RuleToAction(api);
   await converter.convert(event, rule);
 };
@@ -47,7 +52,8 @@ exports.onExecutePostLogin = async (event, api) => {
 
 ### Customizing Rule Callback
 
-The following is an example on how to use a custom Rule callback. It adds the ability to handle redirects applied to context.
+The following is an example on how to use a custom Rule callback, which adds the ability to handle redirects applied to context.
+This is just an example, as redirects are already supported by default.
 
 ```javascript
 const RuleToAction = require("auth0-rule-as-action");
@@ -80,7 +86,7 @@ exports.onExecutePostLogin = async (event, api) => {
     await converter.defaultRuleCallback(obj, newUser, newContext);
   };
 
-  // Run the Rule as an Action
+  // Run the Rule as an Action using the custom rule callback
   await converter.convert(event, rule, {
     callback: customRuleCallback,
   });
