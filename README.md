@@ -80,8 +80,7 @@ await converter.convert(event, rule, {
 - Secrets
 - Redirect urls
 - ID and Access token claims
-- Access token scopes
-- SAML configuration
+- SAML configuration mappings
 - Multifactor triggering
 
 ```diff
@@ -92,13 +91,10 @@ await converter.convert(event, rule, {
 +api.redirect.sendUserTo("https://example.com/foo");
 
 -context.idToken["claim"] = "value";
-+api.idToken.setCustomClaim("claim", "value");
++api.idToken.setCustomClaim(claim, value);
 
 -context.accessToken["claim"] = "value";
-+api.accessToken.setCustomClaim("claim", "value");
-
--context.accessToken.scope.push("scope");
-+api.accessToken.addScope("scope");
++api.accessToken.setCustomClaim(claim, value);
 
 -context.samlConfiguration.mappings["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] = "upn";
 +api.samlResponse.setAttribute("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier", "upn");

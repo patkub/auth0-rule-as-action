@@ -106,13 +106,6 @@ export default class RuleToAction {
       }
     }
 
-    // set Access token scopes that changed between newContext and oldContext
-    for (const scope of Object.values(newContext.accessToken?.scope || {})) {
-      if (scope && scope != oldContext.accessToken?.scope[scope]) {
-        api.accessToken.addScope(scope);
-      }
-    }
-
     // set SAML configuration mappings
     for (const [claim, value] of Object.entries(
       newContext.samlConfiguration?.mappings || {},
