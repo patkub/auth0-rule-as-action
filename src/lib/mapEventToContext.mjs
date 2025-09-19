@@ -13,7 +13,9 @@ function mapEventToContext(event) {
     sso: {},
 
     // Context properties that get set by the Rule
-    accessToken: {},
+    accessToken: {
+      scope: [],
+    },
     idToken: {},
     samlConfiguration: {
       mappings: {},
