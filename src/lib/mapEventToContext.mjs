@@ -9,6 +9,10 @@ function mapEventToContext(event) {
 
   // Initialize context object
   const context = {
+    // Default context properties
+    sso: {},
+
+    // Context properties that get set by the Rule
     accessToken: {},
     idToken: {},
     samlConfiguration: {
@@ -28,12 +32,13 @@ function mapEventToContext(event) {
   context.connectionMetadata = event.connection.metadata;
   context.protocol = event.transaction?.protocol;
   context.riskAssessment = event.riskAssessment;
-  context.sessionID = event.session?.id;
   context.stats = event.stats;
+  context.sessionID = event.session?.id;
   context.request = event.request;
   context.authentication = event.authentication;
   context.authorization = event.authorization;
   context.organization = event.organization;
+  context.sso.current_clients = event.session?.clients;
 
   // Map secrets
   global.configuration = event.secrets;

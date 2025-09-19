@@ -29,19 +29,24 @@ describe("mapEventToContext", function () {
     chai.expect(context.tenant).to.equal(event.tenant.id);
     chai.expect(context.clientID).to.equal(event.client.client_id);
     chai.expect(context.clientName).to.equal(event.client.name);
-    chai.expect(context.clientMetadata).to.equal(event.client.metadata);
+    chai.expect(context.clientMetadata).to.deep.equal(event.client.metadata);
     chai.expect(context.connectionID).to.equal(event.connection.id);
     chai.expect(context.connection).to.equal(event.connection.name);
     chai.expect(context.connectionStrategy).to.equal(event.connection.strategy);
-    chai.expect(context.connectionMetadata).to.equal(event.connection.metadata);
+    chai
+      .expect(context.connectionMetadata)
+      .to.deep.equal(event.connection.metadata);
     chai.expect(context.protocol).to.equal(event.transaction?.protocol);
     chai.expect(context.riskAssessment).to.equal(event.riskAssessment);
     chai.expect(context.sessionID).to.equal(event.session?.id);
-    chai.expect(context.stats).to.equal(event.stats);
+    chai.expect(context.stats).to.deep.equal(event.stats);
     chai.expect(context.request).to.equal(event.request);
     chai.expect(context.authentication).to.equal(event.authentication);
     chai.expect(context.authorization).to.equal(event.authorization);
     chai.expect(context.organization).to.equal(event.organization);
+    chai
+      .expect(context.sso.current_clients)
+      .to.deep.equal(event.session?.clients);
   });
 
   it("maps event secrets to global configuration secrets", async function () {
