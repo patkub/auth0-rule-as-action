@@ -1,16 +1,24 @@
 import { init } from "./lib/init.mjs";
 import { mapEventToContext } from "./lib/mapEventToContext.mjs";
 
+/**
+ * Class to convert Auth0 Rule to Post-Login Action
+ */
 export default class RuleToAction {
-  // The constructor method is called when a new instance of the class is created
+  /**
+   * Initialize RuleToAction
+   * @param {Object} api Post-Login Action api object
+   */
   constructor(api) {
+    // Store globals for use in Rule callback handler
     this.convertGlobals = {};
+    // Post-Login Action api object
     this.api = api;
   }
 
   /**
    * Auto convert Rule to Action
-   * @param {Object} event Post-Login Action event
+   * @param {Object} event Post-Login Action event object
    * @param {Function} rule Auth0 Rule function
    * @param {Object} options  options
    * @param {Function} options.callback callback called by Rule
@@ -68,7 +76,7 @@ export default class RuleToAction {
    * @param {Object} newContext Rule modified context object
    */
   async defaultRuleCallback(obj, newUser, newContext) {
-    // pass in api from convert method
+    // Post-Login Action api object
     const api = this.api;
 
     if (obj instanceof Error) {
@@ -87,11 +95,12 @@ export default class RuleToAction {
 
   /**
    * Handles changes applied to context by Rule
-   * @param {Object} context Rule modified context object
+   * @param {Object} newContext Rule modified context object
    */
   async handleContextMutations(newContext) {
-    // pass in api and old context from convert method
+    // Post-Login Action api
     const api = this.api;
+    // old context from convert method before Rule modifications
     const oldContext = this.convertGlobals.oldContext;
 
     // set ID and Access token claims that changed between newContext and oldContext

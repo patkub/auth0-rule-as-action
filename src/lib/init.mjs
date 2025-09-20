@@ -2,11 +2,10 @@
  * Initialize globals
  */
 function init() {
+  // Define errors used in rules
   global.UnauthorizedError = UnauthorizedError;
 
-  /**
-   * Handle secrets
-   */
+  // Handle secrets
   global.configuration = {};
 }
 
