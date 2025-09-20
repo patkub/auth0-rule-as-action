@@ -50,7 +50,7 @@ function mapEventToContext(event) {
     context.request.geoip.country_code = eventCopy.request.geoip.countryCode;
     context.request.geoip.country_code3 = eventCopy.request.geoip.countryCode3;
     context.request.geoip.country_name = eventCopy.request.geoip.countryName;
-    context.request.geoip.city_name = eventCopy.request.geoip.city;
+    context.request.geoip.city_name = eventCopy.request.geoip.cityName;
     context.request.geoip.latitude = eventCopy.request.geoip.latitude;
     context.request.geoip.longitude = eventCopy.request.geoip.longitude;
     context.request.geoip.time_zone = eventCopy.request.geoip.timeZone;

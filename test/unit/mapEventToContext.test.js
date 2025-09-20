@@ -62,7 +62,9 @@ describe("mapEventToContext", function () {
     chai
       .expect(context.request.geoip.region)
       .to.equal(event.request.geoip.region);
-    chai.expect(context.request.geoip.city).to.equal(event.request.geoip.city);
+    chai
+      .expect(context.request.geoip.city_name)
+      .to.equal(event.request.geoip.cityName);
     chai
       .expect(context.request.geoip.latitude)
       .to.equal(event.request.geoip.latitude);
