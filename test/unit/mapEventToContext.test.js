@@ -37,11 +37,13 @@ describe("mapEventToContext", function () {
       .expect(context.connectionMetadata)
       .to.deep.equal(event.connection.metadata);
     chai.expect(context.protocol).to.equal(event.transaction?.protocol);
-    chai.expect(context.riskAssessment).to.equal(event.riskAssessment);
+    chai
+      .expect(context.riskAssessment)
+      .to.equal(event.authentication?.riskAssessment);
     chai.expect(context.sessionID).to.equal(event.session?.id);
     chai.expect(context.stats).to.deep.equal(event.stats);
     chai.expect(context.request).to.equal(event.request);
-    chai.expect(context.authentication).to.equal(event.authentication);
+    chai.expect(context.authentication).to.equal(event.authentication?.methods);
     chai.expect(context.authorization).to.equal(event.authorization);
     chai.expect(context.organization).to.equal(event.organization);
     chai
