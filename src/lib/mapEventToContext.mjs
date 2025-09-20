@@ -21,27 +21,54 @@ function mapEventToContext(event) {
     multifactor: {},
   };
 
+  // Create a deep copy of event to avoid mutating the original event object
+  const eventCopy = structuredClone(event);
+
   // Map event variables to context variables
-  context.tenant = event.tenant.id;
-  context.clientID = event.client.client_id;
-  context.clientName = event.client.name;
-  context.clientMetadata = event.client.metadata;
-  context.connectionID = event.connection.id;
-  context.connection = event.connection.name;
-  context.connectionStrategy = event.connection.strategy;
-  context.connectionMetadata = event.connection.metadata;
-  context.protocol = event.transaction?.protocol;
-  context.riskAssessment = event.authentication?.riskAssessment;
-  context.stats = event.stats;
-  context.sessionID = event.session?.id;
-  context.request = event.request;
-  context.authentication = event.authentication?.methods;
-  context.authorization = event.authorization;
-  context.organization = event.organization;
-  context.sso.current_clients = event.session?.clients;
+  context.tenant = eventCopy.tenant.id;
+  context.clientID = eventCopy.client.client_id;
+  context.clientName = eventCopy.client.name;
+  context.clientMetadata = eventCopy.client.metadata;
+  context.connectionID = eventCopy.connection.id;
+  context.connection = eventCopy.connection.name;
+  context.connectionStrategy = eventCopy.connection.strategy;
+  context.connectionMetadata = eventCopy.connection.metadata;
+  context.protocol = eventCopy.transaction?.protocol;
+  context.riskAssessment = eventCopy.authentication?.riskAssessment;
+  context.stats = eventCopy.stats;
+  context.sessionID = eventCopy.session?.id;
+
+  // Exclude properties 'geoip' and 'user_agent'
+  // eslint-disable-next-line no-unused-vars
+  context.request = (({ geoip, user_agent, ...object }) => object)(
+    eventCopy.request,
+  );
+  context.request.userAgent = eventCopy.request.user_agent;
+  // geographic IP information
+  if (eventCopy.request?.geoip) {
+    context.request.geoip = {};
+    context.request.geoip.country_code = eventCopy.request.geoip.countryCode;
+    context.request.geoip.country_code3 = eventCopy.request.geoip.countryCode3;
+    context.request.geoip.country_name = eventCopy.request.geoip.countryName;
+    context.request.geoip.city_name = eventCopy.request.geoip.city;
+    context.request.geoip.latitude = eventCopy.request.geoip.latitude;
+    context.request.geoip.longitude = eventCopy.request.geoip.longitude;
+    context.request.geoip.time_zone = eventCopy.request.geoip.timeZone;
+    context.request.geoip.continent_code =
+      eventCopy.request.geoip.continentCode;
+    context.request.geoip.subdivision_code =
+      eventCopy.request.geoip.subdivisionCode;
+    context.request.geoip.subdivision_name =
+      eventCopy.request.geoip.subdivisionName;
+  }
+
+  context.authentication = eventCopy.authentication?.methods;
+  context.authorization = eventCopy.authorization;
+  context.organization = eventCopy.organization;
+  context.sso.current_clients = eventCopy.session?.clients;
 
   // Map secrets
-  global.configuration = event.secrets;
+  global.configuration = eventCopy.secrets;
 
   // Return context determined from event
   return context;
