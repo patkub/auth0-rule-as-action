@@ -31,11 +31,11 @@ function mapEventToContext(event) {
   context.connectionStrategy = event.connection.strategy;
   context.connectionMetadata = event.connection.metadata;
   context.protocol = event.transaction?.protocol;
-  context.riskAssessment = event.riskAssessment;
+  context.riskAssessment = event.authentication?.riskAssessment;
   context.stats = event.stats;
   context.sessionID = event.session?.id;
   context.request = event.request;
-  context.authentication = event.authentication;
+  context.authentication = event.authentication?.methods;
   context.authorization = event.authorization;
   context.organization = event.organization;
   context.sso.current_clients = event.session?.clients;

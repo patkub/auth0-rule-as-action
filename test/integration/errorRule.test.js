@@ -35,7 +35,8 @@ describe("error rule", function () {
     await converter.convert(event, rule);
 
     // Assert
-    // chai.expect(api.access.deny).to.have.been.called.with("This app is unavailable");
-    chai.expect(api.access.deny).to.have.been.called;
+    chai
+      .expect(api.access.deny)
+      .to.have.been.called.with("This app is unavailable");
   });
 });
