@@ -312,9 +312,14 @@ describe("unit::convert", function () {
     await converter.defaultRuleCallback(null, newUser, newContext);
 
     // Assert
-    chai.expect(api.idToken.setCustomClaim).to.have.not.been.called;
-    chai.expect(api.accessToken.setCustomClaim).to.have.not.been.called;
-    chai.expect(api.samlResponse.setAttribute).to.have.not.been.called;
+    // should not call any api methods
+    for (const key of Object.keys(api)) {
+      for (const method of Object.keys(api[key])) {
+        if (api[key][method] instanceof Function) {
+          chai.expect(api[key][method]).to.not.have.been.called();
+        }
+      }
+    }
   });
 
   it("setConvertGlobals sets globals for Rule", async function () {
