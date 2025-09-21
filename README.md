@@ -80,7 +80,7 @@ await converter.convert(event, rule, {
 - Secrets
 - Redirect urls
 - ID and Access token claims
-- SAML configuration mappings
+- SAML configuration mappings and settings
 - Multifactor triggering
 
 ```diff
@@ -101,6 +101,7 @@ await converter.convert(event, rule, {
 
 -context.samlConfiguration.lifetimeInSeconds = 3600;
 +api.samlResponse.setLifetimeInSeconds(3600);
+...
 
 -context.multifactor = { provider: "any", allowRememberBrowser: false };
 +api.multifactor.enable("any", { allowRememberBrowser: false });

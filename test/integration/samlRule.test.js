@@ -11,7 +11,7 @@ import RuleToAction from "../../src/RuleToAction.mjs";
 
 let event;
 
-describe("example rule", function () {
+describe("saml rule", function () {
   beforeEach(function () {
     // reset Auth0 event
     event = createEvent();
@@ -23,17 +23,9 @@ describe("example rule", function () {
     sandbox.restore();
   });
 
-  it("converts exampleRule rule", async function () {
+  it("converts samlRule rule", async function () {
     // Prepare
-    let rule = function exampleRule(user, context, callback) {
-      // ID and Access token claims
-      context.idToken["https://example.com/testIDToken"] = "testIDTokenValue";
-      // Secrets
-      context.idToken["https://example.com/testSecret"] =
-        configuration.TEST_SECRET;
-      context.accessToken["https://example.com/testAccessToken"] =
-        "testAccessTokenValue";
-
+    let rule = function samlRule(user, context, callback) {
       // SAML
       context.samlConfiguration.mappings = {
         "https://example.com/SAML/Attributes/Role": "role",
@@ -66,44 +58,14 @@ describe("example rule", function () {
       context.samlConfiguration.signingCert = `-----BEGIN CERTIFICATE-----FAKE-----END CERTIFICATE-----`;
       context.samlConfiguration.includeAttributeNameFormat = true;
 
-      // Multifactor
-      context.multifactor = {
-        provider: "any",
-        allowRememberBrowser: false,
-      };
-
       callback(null, user, context);
     };
-
-    // Define secrets
-    event.secrets = {};
-    event.secrets.TEST_SECRET = "secret_value";
 
     // Act
     const converter = new RuleToAction(api);
     await converter.convert(event, rule);
 
     // Assert
-    // ID and Access token claims
-    chai
-      .expect(api.idToken.setCustomClaim)
-      .to.have.been.called.with(
-        "https://example.com/testIDToken",
-        "testIDTokenValue",
-      );
-    chai
-      .expect(api.idToken.setCustomClaim)
-      .to.have.been.called.with(
-        "https://example.com/testSecret",
-        event.secrets.TEST_SECRET,
-      );
-    chai
-      .expect(api.accessToken.setCustomClaim)
-      .to.have.been.called.with(
-        "https://example.com/testAccessToken",
-        "testAccessTokenValue",
-      );
-
     // SAML
     chai
       .expect(api.samlResponse.setAttribute)
@@ -184,13 +146,5 @@ describe("example rule", function () {
     chai
       .expect(api.samlResponse.setIncludeAttributeNameFormat)
       .to.have.been.called.with(true);
-
-    // Multifactor
-    chai
-      .expect(api.multifactor.enable)
-      .to.have.been.called.with("any", { allowRememberBrowser: false });
-
-    // Secrets
-    chai.expect(configuration.TEST_SECRET).to.equal(event.secrets.TEST_SECRET);
   });
 });

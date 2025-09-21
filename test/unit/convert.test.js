@@ -8,7 +8,7 @@ import { api } from "../_mocks/api.js";
 import { setupApiSpy } from "../_helpers/setupApiSpy.js";
 import RuleToAction from "../../src/RuleToAction.mjs";
 
-describe("convert unit", function () {
+describe("unit::convert", function () {
   beforeEach(function () {
     // spy on all Auth0 api methods
     setupApiSpy(sandbox, api);

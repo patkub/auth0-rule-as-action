@@ -1,12 +1,12 @@
 "use strict";
 
 import { beforeEach, afterEach, describe, it } from "mocha";
-import { chai } from "../chai.config.js";
+import { chai } from "../../chai.config.js";
 const sandbox = chai.spy.sandbox();
 
-import { init } from "../../src/lib/init.mjs";
+import { init } from "../../../src/lib/init.mjs";
 
-describe("init", function () {
+describe("unit::lib::init", function () {
   beforeEach(function () {
     // reset global
     delete global.UnauthorizedError;

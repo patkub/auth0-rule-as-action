@@ -13,7 +13,7 @@ import RuleToAction from "../../src/RuleToAction.mjs";
 
 let event;
 
-describe("emptyRule", function () {
+describe("empty rule", function () {
   beforeEach(function () {
     // reset Auth0 event
     event = createEvent();

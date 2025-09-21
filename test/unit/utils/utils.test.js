@@ -1,12 +1,12 @@
 "use strict";
 
 import { afterEach, describe, it } from "mocha";
-import { chai } from "../chai.config.js";
+import { chai } from "../../chai.config.js";
 const sandbox = chai.spy.sandbox();
 
-import { areArraysEqualUnordered } from "../../src/utils/utils.mjs";
+import { areArraysEqualUnordered } from "../../../src/utils/utils.mjs";
 
-describe("utils", function () {
+describe("unit::utils", function () {
   afterEach(function () {
     sandbox.restore();
   });
