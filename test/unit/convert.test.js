@@ -177,7 +177,7 @@ describe("convert unit", function () {
       .to.have.been.called.with("any", { allowRememberBrowser: false });
   });
 
-  it("defaultRuleCallback handles different samlConfiguration nameIdentifierProbes", async function () {
+  it("defaultRuleCallback handles different length samlConfiguration nameIdentifierProbes", async function () {
     // Prepare
     let newUser, newContext;
 
@@ -212,6 +212,43 @@ describe("convert unit", function () {
     chai
       .expect(api.samlResponse.setNameIdentifierProbes)
       .to.have.been.called.with(["email", "username"]);
+  });
+
+  it("defaultRuleCallback handles different value samlConfiguration nameIdentifierProbes", async function () {
+    // Prepare
+    let newUser, newContext;
+
+    // set api on rule conversion globals
+    let convertGlobals = {
+      api: api,
+      oldContext: {
+        idToken: {},
+        accessToken: {},
+        samlConfiguration: {
+          mappings: {},
+          nameIdentifierProbes: ["email"],
+        },
+      },
+    };
+
+    newContext = {
+      samlConfiguration: {
+        nameIdentifierProbes: ["username"],
+      },
+    };
+
+    // set api on rule conversion globals
+    const converter = new RuleToAction(api);
+    converter.convertGlobals = convertGlobals;
+
+    // Act
+    // success, callback(null, user, context);
+    await converter.defaultRuleCallback(null, newUser, newContext);
+
+    // Assert
+    chai
+      .expect(api.samlResponse.setNameIdentifierProbes)
+      .to.have.been.called.with(["username"]);
   });
 
   it("defaultRuleCallback handles same samlConfiguration nameIdentifierProbes", async function () {

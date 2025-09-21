@@ -329,6 +329,7 @@ export default class RuleToAction {
  * @returns
  */
 function compareArrays(array1, array2) {
+  if (array1.length !== array2.length) return false;
   array1.sort();
   array2.sort();
   for (let i = 0; i < array1.length; i++) {
