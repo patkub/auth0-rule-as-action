@@ -1,5 +1,6 @@
 import { init } from "./lib/init.mjs";
 import { mapEventToContext } from "./lib/mapEventToContext.mjs";
+import { areArraysEqualUnordered } from "./utils/utils.mjs";
 
 /**
  * Class to convert Auth0 Rule to Post-Login Action
@@ -129,7 +130,7 @@ export default class RuleToAction {
       newContext.samlConfiguration?.audience !==
         oldContext.samlConfiguration?.audience
     ) {
-      api.samlResponse.setAudience(newContext.samlConfiguration?.audience);
+      api.samlResponse.setAudience(newContext.samlConfiguration.audience);
     }
     // set SAML configuration issuer
     if (
@@ -137,7 +138,7 @@ export default class RuleToAction {
       newContext.samlConfiguration?.issuer !==
         oldContext.samlConfiguration?.issuer
     ) {
-      api.samlResponse.setIssuer(newContext.samlConfiguration?.issuer);
+      api.samlResponse.setIssuer(newContext.samlConfiguration.issuer);
     }
     // set SAML configuration encryptionPublicKey
     if (
@@ -146,7 +147,7 @@ export default class RuleToAction {
         oldContext.samlConfiguration?.encryptionPublicKey
     ) {
       api.samlResponse.setEncryptionPublicKey(
-        newContext.samlConfiguration?.encryptionPublicKey,
+        newContext.samlConfiguration.encryptionPublicKey,
       );
     }
     // set SAML configuration recipient
@@ -155,7 +156,7 @@ export default class RuleToAction {
       newContext.samlConfiguration?.recipient !==
         oldContext.samlConfiguration?.recipient
     ) {
-      api.samlResponse.setRecipient(newContext.samlConfiguration?.recipient);
+      api.samlResponse.setRecipient(newContext.samlConfiguration.recipient);
     }
     // set SAML configuration UPN (user principal name) claim
     if (
@@ -164,7 +165,7 @@ export default class RuleToAction {
         oldContext.samlConfiguration?.createUpnClaim
     ) {
       api.samlResponse.setCreateUpnClaim(
-        newContext.samlConfiguration?.createUpnClaim,
+        newContext.samlConfiguration.createUpnClaim,
       );
     }
     // set SAML configuration passthroughClaimsWithNoMapping
@@ -174,7 +175,7 @@ export default class RuleToAction {
         oldContext.samlConfiguration?.passthroughClaimsWithNoMapping
     ) {
       api.samlResponse.setPassthroughClaimsWithNoMapping(
-        newContext.samlConfiguration?.passthroughClaimsWithNoMapping,
+        newContext.samlConfiguration.passthroughClaimsWithNoMapping,
       );
     }
     // set SAML configuration mapUnknownClaimsAsIs
@@ -184,7 +185,7 @@ export default class RuleToAction {
         oldContext.samlConfiguration?.mapUnknownClaimsAsIs
     ) {
       api.samlResponse.setMapUnknownClaimsAsIs(
-        newContext.samlConfiguration?.mapUnknownClaimsAsIs,
+        newContext.samlConfiguration.mapUnknownClaimsAsIs,
       );
     }
     // set SAML configuration mapIdentities
@@ -194,7 +195,7 @@ export default class RuleToAction {
         oldContext.samlConfiguration?.mapIdentities
     ) {
       api.samlResponse.setMapIdentities(
-        newContext.samlConfiguration?.mapIdentities,
+        newContext.samlConfiguration.mapIdentities,
       );
     }
     // set SAML configuration destination
@@ -203,9 +204,7 @@ export default class RuleToAction {
       newContext.samlConfiguration?.destination !==
         oldContext.samlConfiguration?.destination
     ) {
-      api.samlResponse.setDestination(
-        newContext.samlConfiguration?.destination,
-      );
+      api.samlResponse.setDestination(newContext.samlConfiguration.destination);
     }
     // set SAML configuration relayState
     if (
@@ -213,7 +212,7 @@ export default class RuleToAction {
       newContext.samlConfiguration?.relayState !==
         oldContext.samlConfiguration?.relayState
     ) {
-      api.samlResponse.setRelayState(newContext.samlConfiguration?.relayState);
+      api.samlResponse.setRelayState(newContext.samlConfiguration.relayState);
     }
     // set SAML configuration lifetime
     if (
@@ -248,9 +247,9 @@ export default class RuleToAction {
     // set SAML configuration setNameIdentifierProbes
     if (
       newContext.samlConfiguration?.nameIdentifierProbes &&
-      !compareArrays(
+      !areArraysEqualUnordered(
         newContext.samlConfiguration?.nameIdentifierProbes,
-        oldContext.samlConfiguration?.nameIdentifierProbes,
+        oldContext.samlConfiguration.nameIdentifierProbes,
       )
     ) {
       api.samlResponse.setNameIdentifierProbes(
@@ -320,20 +319,4 @@ export default class RuleToAction {
       api.multifactor.enable(provider, options);
     }
   }
-}
-
-/**
- * Compare two arrays for equality
- * @param {String[]} array1
- * @param {String[]} array2
- * @returns
- */
-function compareArrays(array1, array2) {
-  if (array1.length !== array2.length) return false;
-  array1.sort();
-  array2.sort();
-  for (let i = 0; i < array1.length; i++) {
-    if (array1[i] !== array2[i]) return false;
-  }
-  return true;
 }
