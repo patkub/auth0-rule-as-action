@@ -104,4 +104,20 @@ describe("unit::lib::mapEventToContext", function () {
       .expect(global.configuration.TEST_SECRET)
       .to.equal(event.secrets.TEST_SECRET);
   });
+
+  it("instantiates context properties that can be modified in rule", async function () {
+    // Act
+    // defined context variables based on event varibles
+    const context = mapEventToContext(event);
+
+    // Assert
+    // context properties that can be modified in rule have been instantiated
+    chai.expect(context.accessToken).to.be.an("object");
+    chai.expect(context.idToken).to.be.an("object");
+    chai.expect(context.samlConfiguration).to.be.an("object");
+    chai
+      .expect(context.samlConfiguration)
+      .to.have.all.keys("mappings", "nameIdentifierProbes");
+    chai.expect(context.multifactor).to.not.be.undefined;
+  });
 });
