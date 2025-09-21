@@ -82,7 +82,22 @@ describe("convert unit", function () {
         mappings: {
           mockSAMLClaim: "mockSAMLValue",
         },
+        audience: "mockAudience",
+        issuer: "mockIssuer",
+        encryptionPublicKey: "mockEncryptionPublicKey",
+        recipient: "mockRecipient",
+        createUpnClaim: true,
+        passthroughClaimsWithNoMapping: true,
+        mapUnknownClaimsAsIs: true,
+        mapIdentities: true,
+        destination: "mockDestination",
+        relayState: "mockRelayState",
         lifetimeInSeconds: 3600,
+        signResponse: true,
+        nameIdentifierFormat: "mockNameIdentifierFormat",
+        authnContextClassRef: "mockAuthnContextClassRef",
+        signingCert: "mockSigningCert",
+        includeAttributeNameFormat: true,
       },
       multifactor: {
         provider: "any",
@@ -109,8 +124,47 @@ describe("convert unit", function () {
       .expect(api.samlResponse.setAttribute)
       .to.have.been.called.with("mockSAMLClaim", "mockSAMLValue");
     chai
+      .expect(api.samlResponse.setAudience)
+      .to.have.been.called.with("mockAudience");
+    chai
+      .expect(api.samlResponse.setIssuer)
+      .to.have.been.called.with("mockIssuer");
+    chai
+      .expect(api.samlResponse.setEncryptionPublicKey)
+      .to.have.been.called.with("mockEncryptionPublicKey");
+    chai
+      .expect(api.samlResponse.setRecipient)
+      .to.have.been.called.with("mockRecipient");
+    chai
+      .expect(api.samlResponse.setCreateUpnClaim)
+      .to.have.been.called.with(true);
+    chai
+      .expect(api.samlResponse.setPassthroughClaimsWithNoMapping)
+      .to.have.been.called.with(true);
+    chai
+      .expect(api.samlResponse.setMapUnknownClaimsAsIs)
+      .to.have.been.called.with(true);
+    chai
+      .expect(api.samlResponse.setMapIdentities)
+      .to.have.been.called.with(true);
+    chai
+      .expect(api.samlResponse.setDestination)
+      .to.have.been.called.with("mockDestination");
+    chai
+      .expect(api.samlResponse.setRelayState)
+      .to.have.been.called.with("mockRelayState");
+    chai
       .expect(api.samlResponse.setLifetimeInSeconds)
       .to.have.been.called.with(3600);
+    chai
+      .expect(api.samlResponse.setSignResponse)
+      .to.have.been.called.with(true);
+    chai
+      .expect(api.samlResponse.setNameIdentifierFormat)
+      .to.have.been.called.with("mockNameIdentifierFormat");
+    chai
+      .expect(api.samlResponse.setAuthnContextClassRef)
+      .to.have.been.called.with("mockAuthnContextClassRef");
     chai
       .expect(api.multifactor.enable)
       .to.have.been.called.with("any", { allowRememberBrowser: false });

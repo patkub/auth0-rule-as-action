@@ -123,7 +123,98 @@ export default class RuleToAction {
         api.samlResponse.setAttribute(claim, value);
       }
     }
-
+    // set SAML configuration audience
+    if (
+      newContext.samlConfiguration?.audience &&
+      newContext.samlConfiguration?.audience !==
+        oldContext.samlConfiguration?.audience
+    ) {
+      api.samlResponse.setAudience(newContext.samlConfiguration?.audience);
+    }
+    // set SAML configuration issuer
+    if (
+      newContext.samlConfiguration?.issuer &&
+      newContext.samlConfiguration?.issuer !==
+        oldContext.samlConfiguration?.issuer
+    ) {
+      api.samlResponse.setIssuer(newContext.samlConfiguration?.issuer);
+    }
+    // set SAML configuration encryptionPublicKey
+    if (
+      newContext.samlConfiguration?.encryptionPublicKey &&
+      newContext.samlConfiguration?.encryptionPublicKey !==
+        oldContext.samlConfiguration?.encryptionPublicKey
+    ) {
+      api.samlResponse.setEncryptionPublicKey(
+        newContext.samlConfiguration?.encryptionPublicKey,
+      );
+    }
+    // set SAML configuration recipient
+    if (
+      newContext.samlConfiguration?.recipient &&
+      newContext.samlConfiguration?.recipient !==
+        oldContext.samlConfiguration?.recipient
+    ) {
+      api.samlResponse.setRecipient(newContext.samlConfiguration?.recipient);
+    }
+    // set SAML configuration UPN (user principal name) claim
+    if (
+      newContext.samlConfiguration?.createUpnClaim &&
+      newContext.samlConfiguration?.createUpnClaim !=
+        oldContext.samlConfiguration?.createUpnClaim
+    ) {
+      api.samlResponse.setCreateUpnClaim(
+        newContext.samlConfiguration?.createUpnClaim,
+      );
+    }
+    // set SAML configuration passthroughClaimsWithNoMapping
+    if (
+      newContext.samlConfiguration?.passthroughClaimsWithNoMapping &&
+      newContext.samlConfiguration?.passthroughClaimsWithNoMapping !==
+        oldContext.samlConfiguration?.passthroughClaimsWithNoMapping
+    ) {
+      api.samlResponse.setPassthroughClaimsWithNoMapping(
+        newContext.samlConfiguration?.passthroughClaimsWithNoMapping,
+      );
+    }
+    // set SAML configuration mapUnknownClaimsAsIs
+    if (
+      newContext.samlConfiguration?.mapUnknownClaimsAsIs &&
+      newContext.samlConfiguration?.mapUnknownClaimsAsIs !==
+        oldContext.samlConfiguration?.mapUnknownClaimsAsIs
+    ) {
+      api.samlResponse.setMapUnknownClaimsAsIs(
+        newContext.samlConfiguration?.mapUnknownClaimsAsIs,
+      );
+    }
+    // set SAML configuration mapIdentities
+    if (
+      newContext.samlConfiguration?.mapIdentities &&
+      newContext.samlConfiguration?.mapIdentities !==
+        oldContext.samlConfiguration?.mapIdentities
+    ) {
+      api.samlResponse.setMapIdentities(
+        newContext.samlConfiguration?.mapIdentities,
+      );
+    }
+    // set SAML configuration destination
+    if (
+      newContext.samlConfiguration?.destination &&
+      newContext.samlConfiguration?.destination !==
+        oldContext.samlConfiguration?.destination
+    ) {
+      api.samlResponse.setDestination(
+        newContext.samlConfiguration?.destination,
+      );
+    }
+    // set SAML configuration relayState
+    if (
+      newContext.samlConfiguration?.relayState &&
+      newContext.samlConfiguration?.relayState !==
+        oldContext.samlConfiguration?.relayState
+    ) {
+      api.samlResponse.setRelayState(newContext.samlConfiguration?.relayState);
+    }
     // set SAML configuration lifetime
     if (
       newContext.samlConfiguration?.lifetimeInSeconds &&
@@ -132,6 +223,56 @@ export default class RuleToAction {
     ) {
       api.samlResponse.setLifetimeInSeconds(
         newContext.samlConfiguration.lifetimeInSeconds,
+      );
+    }
+    // set SAML configuration setSignResponse
+    if (
+      newContext.samlConfiguration?.signResponse &&
+      newContext.samlConfiguration?.signResponse !=
+        oldContext.samlConfiguration?.signResponse
+    ) {
+      api.samlResponse.setSignResponse(
+        newContext.samlConfiguration.signResponse,
+      );
+    }
+    // setNameIdentifierFormat
+    if (
+      newContext.samlConfiguration?.nameIdentifierFormat &&
+      newContext.samlConfiguration?.nameIdentifierFormat !==
+        oldContext.samlConfiguration?.nameIdentifierFormat
+    ) {
+      api.samlResponse.setNameIdentifierFormat(
+        newContext.samlConfiguration.nameIdentifierFormat,
+      );
+    }
+    // // setNameIdentifierProbes
+    // if (newContext.samlConfiguration?.nameIdentifierProbes) {
+    //   api.samlResponse.setNameIdentifierProbes(
+    //     newContext.samlConfiguration.nameIdentifierProbes,
+    //   );
+    // }
+    // setAuthnContextClassRef
+    if (
+      newContext.samlConfiguration?.authnContextClassRef &&
+      newContext.samlConfiguration?.authnContextClassRef !==
+        oldContext.samlConfiguration?.authnContextClassRef
+    ) {
+      api.samlResponse.setAuthnContextClassRef(
+        newContext.samlConfiguration.authnContextClassRef,
+      );
+    }
+    // setSigningCert
+    if (newContext.samlConfiguration?.signingCert) {
+      api.samlResponse.setSigningCert(newContext.samlConfiguration.signingCert);
+    }
+    // setIncludeAttributeNameFormat
+    if (
+      newContext.samlConfiguration?.includeAttributeNameFormat &&
+      newContext.samlConfiguration?.includeAttributeNameFormat !==
+        oldContext.samlConfiguration?.includeAttributeNameFormat
+    ) {
+      api.samlResponse.setIncludeAttributeNameFormat(
+        newContext.samlConfiguration.includeAttributeNameFormat,
       );
     }
 
