@@ -1,15 +1,15 @@
 "use strict";
 
 import { beforeEach, afterEach, describe, it } from "mocha";
-import { chai } from "../chai.config.js";
+import { chai } from "../../chai.config.js";
 const sandbox = chai.spy.sandbox();
 
-import { createEvent } from "../_mocks/event.js";
-import { mapEventToContext } from "../../src/lib/mapEventToContext.mjs";
+import { createEvent } from "../../_mocks/event.js";
+import { mapEventToContext } from "../../../src/lib/mapEventToContext.mjs";
 
 let event;
 
-describe("mapEventToContext", function () {
+describe("unit::lib::mapEventToContext", function () {
   beforeEach(function () {
     // reset Auth0 event
     event = createEvent();

@@ -17,6 +17,7 @@ function mapEventToContext(event) {
     idToken: {},
     samlConfiguration: {
       mappings: {},
+      nameIdentifierProbes: [],
     },
     multifactor: {},
   };

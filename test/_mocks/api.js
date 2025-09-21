@@ -44,12 +44,15 @@ const api = {
   samlResponse: {
     setAttribute: (attribute, value) => {},
     setAudience: (audience) => {},
+    setIssuer: (issuer) => {},
+    setEncryptionPublicKey: (encryptionPublicKey) => {},
     setRecipient: (recipient) => {},
     setCreateUpnClaim: (createUpnClaim) => {},
     setPassthroughClaimsWithNoMapping: (passthroughClaimsWithNoMapping) => {},
     setMapUnknownClaimsAsIs: (mapUnknownClaimsAsIs) => {},
     setMapIdentities: (mapIdentities) => {},
     setDestination: (destination) => {},
+    setRelayState: (relayState) => {},
     setLifetimeInSeconds: (lifetimeInSeconds) => {},
     setSignResponse: (signResponse) => {},
     setNameIdentifierFormat: (nameIdentifierFormat) => {},
@@ -60,7 +63,6 @@ const api = {
     setEncryptionCert: (encryptionCert) => {},
     setCert: (cert) => {},
     setKey: (key) => {},
-    setSignatureAlgorithm: (signatureAlgorithm) => {},
     setDigestAlgorithm: (digestAlgorithm) => {},
   },
 };
