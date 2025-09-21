@@ -250,7 +250,7 @@ export default class RuleToAction {
       newContext.samlConfiguration?.nameIdentifierProbes &&
       !compareArrays(
         newContext.samlConfiguration?.nameIdentifierProbes,
-        oldContext.samlConfiguration?.nameIdentifierProbes || [],
+        oldContext.samlConfiguration?.nameIdentifierProbes,
       )
     ) {
       api.samlResponse.setNameIdentifierProbes(

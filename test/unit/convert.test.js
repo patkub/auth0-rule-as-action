@@ -67,6 +67,7 @@ describe("convert unit", function () {
         accessToken: {},
         samlConfiguration: {
           mappings: {},
+          nameIdentifierProbes: [],
         },
       },
     };
@@ -196,6 +197,7 @@ describe("convert unit", function () {
 
     newContext = {
       samlConfiguration: {
+        mappings: {},
         nameIdentifierProbes: ["email", "username"],
       },
     };
@@ -233,6 +235,7 @@ describe("convert unit", function () {
 
     newContext = {
       samlConfiguration: {
+        mappings: {},
         nameIdentifierProbes: ["username"],
       },
     };
