@@ -118,6 +118,6 @@ describe("unit::lib::mapEventToContext", function () {
     chai
       .expect(context.samlConfiguration)
       .to.have.all.keys("mappings", "nameIdentifierProbes");
-    chai.expect(context.multifactor).to.not.be.undefined;
+    chai.expect(context.multifactor).to.be.an("object");
   });
 });
