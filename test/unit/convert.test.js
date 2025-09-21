@@ -95,9 +95,13 @@ describe("convert unit", function () {
         lifetimeInSeconds: 3600,
         signResponse: true,
         nameIdentifierFormat: "mockNameIdentifierFormat",
+        nameIdentifierProbes: ["email", "username"],
         authnContextClassRef: "mockAuthnContextClassRef",
         signingCert: "mockSigningCert",
         includeAttributeNameFormat: true,
+        encryptionCert: "mockEncryptionCert",
+        cert: "mockCert",
+        key: "mockKey",
       },
       multifactor: {
         provider: "any",
@@ -163,11 +167,88 @@ describe("convert unit", function () {
       .expect(api.samlResponse.setNameIdentifierFormat)
       .to.have.been.called.with("mockNameIdentifierFormat");
     chai
+      .expect(api.samlResponse.setNameIdentifierProbes)
+      .to.have.been.called.with(["email", "username"]);
+    chai
       .expect(api.samlResponse.setAuthnContextClassRef)
       .to.have.been.called.with("mockAuthnContextClassRef");
     chai
       .expect(api.multifactor.enable)
       .to.have.been.called.with("any", { allowRememberBrowser: false });
+  });
+
+  it("defaultRuleCallback handles different samlConfiguration nameIdentifierProbes", async function () {
+    // Prepare
+    let newUser, newContext;
+
+    // set api on rule conversion globals
+    let convertGlobals = {
+      api: api,
+      oldContext: {
+        idToken: {},
+        accessToken: {},
+        samlConfiguration: {
+          mappings: {},
+          nameIdentifierProbes: ["email"],
+        },
+      },
+    };
+
+    newContext = {
+      samlConfiguration: {
+        nameIdentifierProbes: ["email", "username"],
+      },
+    };
+
+    // set api on rule conversion globals
+    const converter = new RuleToAction(api);
+    converter.convertGlobals = convertGlobals;
+
+    // Act
+    // success, callback(null, user, context);
+    await converter.defaultRuleCallback(null, newUser, newContext);
+
+    // Assert
+    chai
+      .expect(api.samlResponse.setNameIdentifierProbes)
+      .to.have.been.called.with(["email", "username"]);
+  });
+
+  it("defaultRuleCallback handles same samlConfiguration nameIdentifierProbes", async function () {
+    // Prepare
+    let newUser, newContext;
+
+    // set api on rule conversion globals
+    let convertGlobals = {
+      api: api,
+      oldContext: {
+        idToken: {},
+        accessToken: {},
+        samlConfiguration: {
+          mappings: {},
+          nameIdentifierProbes: ["email", "username"],
+        },
+      },
+    };
+
+    newContext = {
+      samlConfiguration: {
+        nameIdentifierProbes: ["email", "username"],
+      },
+    };
+
+    // set api on rule conversion globals
+    const converter = new RuleToAction(api);
+    converter.convertGlobals = convertGlobals;
+
+    // Act
+    // success, callback(null, user, context);
+    await converter.defaultRuleCallback(null, newUser, newContext);
+
+    // Assert
+    chai
+      .expect(api.samlResponse.setNameIdentifierProbes)
+      .to.not.have.been.called.with(["email", "username"]);
   });
 
   it("defaultRuleCallback handles empty context", async function () {

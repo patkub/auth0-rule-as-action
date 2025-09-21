@@ -235,7 +235,7 @@ export default class RuleToAction {
         newContext.samlConfiguration.signResponse,
       );
     }
-    // setNameIdentifierFormat
+    // set SAML configuration setNameIdentifierFormat
     if (
       newContext.samlConfiguration?.nameIdentifierFormat &&
       newContext.samlConfiguration?.nameIdentifierFormat !==
@@ -245,13 +245,19 @@ export default class RuleToAction {
         newContext.samlConfiguration.nameIdentifierFormat,
       );
     }
-    // // setNameIdentifierProbes
-    // if (newContext.samlConfiguration?.nameIdentifierProbes) {
-    //   api.samlResponse.setNameIdentifierProbes(
-    //     newContext.samlConfiguration.nameIdentifierProbes,
-    //   );
-    // }
-    // setAuthnContextClassRef
+    // set SAML configuration setNameIdentifierProbes
+    if (
+      newContext.samlConfiguration?.nameIdentifierProbes &&
+      !compareArrays(
+        newContext.samlConfiguration?.nameIdentifierProbes,
+        oldContext.samlConfiguration?.nameIdentifierProbes || [],
+      )
+    ) {
+      api.samlResponse.setNameIdentifierProbes(
+        newContext.samlConfiguration.nameIdentifierProbes,
+      );
+    }
+    // set SAML configuration setAuthnContextClassRef
     if (
       newContext.samlConfiguration?.authnContextClassRef &&
       newContext.samlConfiguration?.authnContextClassRef !==
@@ -261,11 +267,15 @@ export default class RuleToAction {
         newContext.samlConfiguration.authnContextClassRef,
       );
     }
-    // setSigningCert
-    if (newContext.samlConfiguration?.signingCert) {
+    // set SAML configuration setSigningCert
+    if (
+      newContext.samlConfiguration?.signingCert &&
+      newContext.samlConfiguration?.signingCert !==
+        oldContext.samlConfiguration?.signingCert
+    ) {
       api.samlResponse.setSigningCert(newContext.samlConfiguration.signingCert);
     }
-    // setIncludeAttributeNameFormat
+    // set SAML configuration setIncludeAttributeNameFormat
     if (
       newContext.samlConfiguration?.includeAttributeNameFormat &&
       newContext.samlConfiguration?.includeAttributeNameFormat !==
@@ -274,6 +284,30 @@ export default class RuleToAction {
       api.samlResponse.setIncludeAttributeNameFormat(
         newContext.samlConfiguration.includeAttributeNameFormat,
       );
+    }
+    // set SAML configuration setEncryptionCert
+    if (
+      newContext.samlConfiguration?.encryptionCert &&
+      newContext.samlConfiguration?.encryptionCert !==
+        oldContext.samlConfiguration?.encryptionCert
+    ) {
+      api.samlResponse.setEncryptionCert(
+        newContext.samlConfiguration.encryptionCert,
+      );
+    }
+    // set SAML configuration setCert
+    if (
+      newContext.samlConfiguration?.cert &&
+      newContext.samlConfiguration?.cert !== oldContext.samlConfiguration?.cert
+    ) {
+      api.samlResponse.setCert(newContext.samlConfiguration.cert);
+    }
+    // set SAML configuration setKey
+    if (
+      newContext.samlConfiguration?.key &&
+      newContext.samlConfiguration?.key !== oldContext.samlConfiguration?.key
+    ) {
+      api.samlResponse.setKey(newContext.samlConfiguration.key);
     }
 
     // set multifactor options
@@ -286,4 +320,19 @@ export default class RuleToAction {
       api.multifactor.enable(provider, options);
     }
   }
+}
+
+/**
+ * Compare two arrays for equality
+ * @param {String[]} array1
+ * @param {String[]} array2
+ * @returns
+ */
+function compareArrays(array1, array2) {
+  array1.sort();
+  array2.sort();
+  for (let i = 0; i < array1.length; i++) {
+    if (array1[i] !== array2[i]) return false;
+  }
+  return true;
 }
