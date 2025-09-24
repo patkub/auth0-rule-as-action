@@ -34,7 +34,7 @@ const api = {
     sendUserTo: (url, options) => {},
     validateToken: (options) => {},
   },
-  refreshToken : {
+  refreshToken: {
     revoke: (reason) => {},
     setExpiresAt: (absolute) => {},
     setIdleExpiresAt: (idle) => {},
@@ -63,15 +63,15 @@ const api = {
     setIncludeAttributeNameFormat: (includeAttributeNameFormat) => {},
     setEncryptionCert: (encryptionCert) => {},
     setCert: (cert) => {},
-    setKey: (key) => {}
+    setKey: (key) => {},
   },
   session: {
     revoke: (reason, options) => {},
     setExpiresAt: (absolute) => {},
-    setIdleExpiresAt: (idle) => {}
+    setIdleExpiresAt: (idle) => {},
   },
   transation: {
-    setMetadata: (name, value) => {}
+    setMetadata: (name, value) => {},
   },
   user: {
     setAppMetadata: (name, value) => {},
