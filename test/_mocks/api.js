@@ -29,14 +29,15 @@ const api = {
   multifactor: {
     enable: (provider, options) => {},
   },
-  user: {
-    setAppMetadata: (name, value) => {},
-    setUserMetadata: (name, value) => {},
-  },
   redirect: {
     encodeToken: (options) => {},
     sendUserTo: (url, options) => {},
     validateToken: (options) => {},
+  },
+  refreshToken : {
+    revoke: (reason) => {},
+    setExpiresAt: (absolute) => {},
+    setIdleExpiresAt: (idle) => {},
   },
   rules: {
     wasExecuted: (ruleId) => {},
@@ -62,8 +63,19 @@ const api = {
     setIncludeAttributeNameFormat: (includeAttributeNameFormat) => {},
     setEncryptionCert: (encryptionCert) => {},
     setCert: (cert) => {},
-    setKey: (key) => {},
-    setDigestAlgorithm: (digestAlgorithm) => {},
+    setKey: (key) => {}
+  },
+  session: {
+    revoke: (reason, options) => {},
+    setExpiresAt: (absolute) => {},
+    setIdleExpiresAt: (idle) => {}
+  },
+  transation: {
+    setMetadata: (name, value) => {}
+  },
+  user: {
+    setAppMetadata: (name, value) => {},
+    setUserMetadata: (name, value) => {},
   },
 };
 
